@@ -7,7 +7,7 @@ namespace GreenOptimizer.DimensionAndSort
 
         public Length(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, Units.Metre, prefix) { }
 
-        public Length(double val, Unit unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, unit, prefix) { }
+        public Length(double val, Unit? unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, unit, prefix) { }
 
         public Length()
         {
@@ -49,9 +49,9 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class Time : QuantityBase
     {
-        public static TimeUnit _second = Units.Second;
+        public static TimeUnit? _second = Units.Second;
         public Time(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _second, prefix) { }
-        public Time(double val, Unit unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, unit, prefix) { }
+        public Time(double val, Unit? unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, unit, prefix) { }
         public Time()
         {
 
@@ -86,11 +86,11 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class Mass : QuantityBase
     {
-        protected static Kilogram _kilo = Units.Kilogram;
+        protected static Kilogram? _kilo = Units.Kilogram;
 
         public Mass(double val) : base(val, _kilo) { }
-        public Mass(double val, Unit unit) : base(val, unit) { }
-        public Mass(double val, Unit unit, Unit.SI_PrefixEnum prefix) : base(val, unit, prefix) { }
+        public Mass(double val, Unit? unit) : base(val, unit) { }
+        public Mass(double val, Unit? unit, Unit.SI_PrefixEnum prefix) : base(val, unit, prefix) { }
 
         public Mass()
         {
@@ -130,10 +130,10 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class Temperature : QuantityBase
     {
-        protected static Kelvin _kelvin = Units.Kelvin;
+        protected static Kelvin? _kelvin = Units.Kelvin;
         public Temperature(double val) : base(val, _kelvin) { }
-        public Temperature(double val, Unit unit) : base(val, unit) { }
-        public Temperature(double val, Unit unit, Unit.SI_PrefixEnum prefix) : base(val, unit, prefix) { }
+        public Temperature(double val, Unit? unit) : base(val, unit) { }
+        public Temperature(double val, Unit? unit, Unit.SI_PrefixEnum prefix) : base(val, unit, prefix) { }
         public static implicit operator Temperature(double val)
         {
             return new Temperature(val);
@@ -176,7 +176,7 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class DimensionlessQuantity : QuantityBase
     {
-        protected static Dimensionless _dimless = Units.Dimensionless;
+        protected static Dimensionless? _dimless = Units.Dimensionless;
         public DimensionlessQuantity(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, new Dimensionless(), prefix) { }
         public static implicit operator DimensionlessQuantity(double val) { return new DimensionlessQuantity(val); }
         public static implicit operator DimensionlessQuantity(Quantity mq)
@@ -199,7 +199,7 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class Percentage : QuantityBase
     {
-        protected static Percent _perc = Units.Percent;
+        protected static Percent? _perc = Units.Percent;
         public Percentage(double val) : base(val, Units.Percent, Unit.SI_PrefixEnum.unity, "%") { }
 
         public static implicit operator Percentage(double val) { return new Percentage(val); }
@@ -225,9 +225,9 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class Volume : QuantityBase
     {
-        private static QubicMetre _qubicMetreUnit = Units.QubicMetre;
+        private static QubicMetre? _qubicMetreUnit = Units.QubicMetre;
         public Volume(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _qubicMetreUnit, prefix) { }
-        public Volume(double val, Unit unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, unit, prefix) { }
+        public Volume(double val, Unit? unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, unit, prefix) { }
 
         public Volume()
         {
@@ -270,7 +270,7 @@ namespace GreenOptimizer.DimensionAndSort
         private QubicMetrePerSecond _qubicMetrePerSecondUnit = new QubicMetrePerSecond();
 
         public VolumeFlow(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, new QubicMetrePerSecond(), prefix) { }
-        public VolumeFlow(double val, Unit unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, unit, prefix) { }
+        public VolumeFlow(double val, Unit? unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, unit, prefix) { }
 
         public VolumeFlow()
         {
@@ -307,9 +307,9 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class MassFlow : QuantityBase
     {
-        protected static KilogramPerSecond _kilogramPerSecondUnit = Units.KilogramPerSecond;
+        protected static KilogramPerSecond? _kilogramPerSecondUnit = Units.KilogramPerSecond;
         public MassFlow(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _kilogramPerSecondUnit, prefix) { }
-        public MassFlow(double val, Unit unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, unit, prefix) { }
+        public MassFlow(double val, Unit? unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, unit, prefix) { }
         public static implicit operator MassFlow(double val) { return new MassFlow(val); }
         public static implicit operator MassFlow(Quantity mq)
         {
@@ -341,10 +341,10 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class Area : QuantityBase
     {
-        protected static SquareMetre _squareMetreUnit = new SquareMetre();
+        protected static SquareMetre? _squareMetreUnit = new SquareMetre();
 
         public Area(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, new SquareMetre(), prefix) { }
-        public Area(double val, Unit unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, unit, prefix) { }
+        public Area(double val, Unit? unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, unit, prefix) { }
 
         public Area() : base(0, new SquareMetre(), Unit.SI_PrefixEnum.unity)
         {
@@ -383,10 +383,10 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class Speed : QuantityBase
     {
-        private static Unit _metrePerSecond = new Unit(1, 0, -1, 0, 0, 0, 0);
+        private static Unit? _metrePerSecond = new Unit(1, 0, -1, 0, 0, 0, 0);
         public Speed(double val) : base(val, _metrePerSecond) { }
-        public Speed(double val, Unit unit) : base(val, unit) { }
-        public Speed(double val, Unit unit, Unit.SI_PrefixEnum prefix) : base(val, unit, prefix) { }
+        public Speed(double val, Unit? unit) : base(val, unit) { }
+        public Speed(double val, Unit? unit, Unit.SI_PrefixEnum prefix) : base(val, unit, prefix) { }
         public static implicit operator Speed(double val) { return new Speed(val); }
         public static implicit operator Speed(Quantity mq)
         {
@@ -419,10 +419,10 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class Acceleration : QuantityBase
     {
-        private static Unit _metrePerSecond2 = new Unit(1, 0, -2, 0, 0, 0, 0);
+        private static Unit? _metrePerSecond2 = new Unit(1, 0, -2, 0, 0, 0, 0);
         public Acceleration(double val) : base(val, _metrePerSecond2) { }
-        public Acceleration(double val, Unit unit) : base(val, unit) { }
-        public Acceleration(double val, Unit unit, Unit.SI_PrefixEnum prefix) : base(val, unit, prefix) { }
+        public Acceleration(double val, Unit? unit) : base(val, unit) { }
+        public Acceleration(double val, Unit? unit, Unit.SI_PrefixEnum prefix) : base(val, unit, prefix) { }
         public static implicit operator Acceleration(double val) { return new Acceleration(val); }
         public static implicit operator Acceleration(Quantity mq)
         {
@@ -454,10 +454,10 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class Energy : QuantityBase
     {
-        private static Joule _jouleUnit = new Joule();
+        private static Joule? _jouleUnit = new Joule();
         public Energy(Energy e) : base(e.Value, e.Unit, e.PrefixIndex) { }
         public Energy(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _jouleUnit, prefix) { }
-        public Energy(double val, Unit u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public Energy(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
         public static implicit operator Energy(double val) { return new Energy(val); }
 
         public Energy()
@@ -503,12 +503,12 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class EnergyEquivalent : QuantityBase
     {
-        private static Unit _energyPerVolume = new Joule() / new QubicMetre();
+        private static Unit? _energyPerVolume = new Joule() / new QubicMetre();
 
         public EnergyEquivalent(EnergyEquivalent e) : base(e.Value, e.Unit, e.PrefixIndex) { }
         public EnergyEquivalent() { }
         public EnergyEquivalent(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _energyPerVolume, prefix) { }
-        public EnergyEquivalent(double val, Unit u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public EnergyEquivalent(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
         public static implicit operator EnergyEquivalent(double val) { return new EnergyEquivalent(val); }
         public static implicit operator EnergyEquivalent(Quantity mq)
         {
@@ -557,10 +557,10 @@ namespace GreenOptimizer.DimensionAndSort
     {
         private static Joule _energyUnit = new Joule(Unit.SI_PrefixEnum.kilo);
         private static Kilogram _weightUnit = new Kilogram();
-        private static Unit _heatingValueUnit = _energyUnit / _weightUnit;
+        private static Unit? _heatingValueUnit = _energyUnit / _weightUnit;
         public HeatingValue(HeatingValue e) : base(e.Value, e.Unit, e.PrefixIndex) { }
         public HeatingValue(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _heatingValueUnit, prefix) { }
-        public HeatingValue(double val, Unit u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public HeatingValue(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
         public static implicit operator HeatingValue(double val) { return new HeatingValue(val); }
         public static implicit operator HeatingValue(Quantity mq)
         {
@@ -604,7 +604,7 @@ namespace GreenOptimizer.DimensionAndSort
     {
         private static Joule _energyUnit = new Joule();
         private static Kilogram _weightUnit = new Kilogram();
-        private static Unit _specificEnergyUnit = _energyUnit / _weightUnit;
+        private static Unit? _specificEnergyUnit = _energyUnit / _weightUnit;
 
         public SpecificEnergy()
         {
@@ -612,7 +612,7 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public SpecificEnergy(SpecificEnergy e) : base(e.Value, e.Unit, e.PrefixIndex) { }
         public SpecificEnergy(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _specificEnergyUnit, prefix) { }
-        public SpecificEnergy(double val, Unit u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public SpecificEnergy(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
         public static implicit operator SpecificEnergy(double val) { return new SpecificEnergy(val); }
         public static implicit operator SpecificEnergy(Quantity mq)
         {
@@ -653,11 +653,11 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class Force : QuantityBase
     {
-        static Newton _newton = Units.Newton;
+        static Newton? _newton = Units.Newton;
         //public Force(Force f) : base(f.Value, f.Unit, f.PrefixIndex) { }
         public Force(double val) : base(val, _newton) { }
         public Force(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _newton, prefix) { }
-        public Force(double val, Unit u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public Force(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
         public static implicit operator Force(double val) { return new Force(val); }
         public static implicit operator Force(Quantity mq)
         {
@@ -699,11 +699,11 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class Pressure : QuantityBase
     {
-        static Pascal _pascal = Units.Pascal;
+        static Pascal? _pascal = Units.Pascal;
         public Pressure(Pressure p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public Pressure(double val) : base(val, _pascal) { }
         public Pressure(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _pascal, prefix) { }
-        public Pressure(double val, Unit u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public Pressure(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
         public static implicit operator Pressure(double val) { return new Pressure(val); }
         public static implicit operator Pressure(Quantity mq)
         {
@@ -745,11 +745,11 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class Density : QuantityBase
     {
-        static Unit _densityUnit = new Unit(-3, 1, 0, 0, 0, 0, 0);
+        static Unit? _densityUnit = new Unit(-3, 1, 0, 0, 0, 0, 0);
         public Density(Density p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public Density(double val) : base(val, _densityUnit) { }
         public Density(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _densityUnit, prefix) { }
-        public Density(double val, Unit u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public Density(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
         public static implicit operator Density(double val) { return new Density(val); }
         public static implicit operator Density(Quantity mq)
         {
@@ -782,11 +782,11 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class Current : QuantityBase
     {
-        static Unit _ampere = Units.Ampere;
+        static Unit? _ampere = Units.Ampere;
         public Current(Current p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public Current(double val) : base(val, _ampere) { }
         public Current(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _ampere, prefix) { }
-        public Current(double val, Unit u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public Current(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
         public static implicit operator Current(double val) { return new Current(val); }
         public static implicit operator Current(Quantity mq)
         {
@@ -827,11 +827,11 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class Voltage : QuantityBase
     {
-        static Unit _volt = Units.Volt;
+        static Unit? _volt = Units.Volt;
         public Voltage(Voltage p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public Voltage(double val) : base(val, _volt) { }
         public Voltage(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _volt, prefix) { }
-        public Voltage(double val, Unit u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public Voltage(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
         public static implicit operator Voltage(double val) { return new Voltage(val); }
         public static implicit operator Voltage(Quantity mq)
         {
@@ -871,11 +871,11 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class Resistance : QuantityBase
     {
-        static Unit _ohm = Units.Ohm;
+        static Unit? _ohm = Units.Ohm;
         public Resistance(Resistance p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public Resistance(double val) : base(val, _ohm) { }
         public Resistance(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _ohm, prefix) { }
-        public Resistance(double val, Unit u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public Resistance(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
         public static implicit operator Resistance(double val) { return new Resistance(val); }
         public static implicit operator Resistance(Quantity mq)
         {
@@ -916,12 +916,12 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class PowerRampRate : QuantityBase
     {
-        static Unit _wattsPerSecond = Units.Watt / Units.Second;
+        static Unit? _wattsPerSecond = Units.Watt / Units.Second;
 
         public PowerRampRate(PowerRampRate p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public PowerRampRate(double val) : base(val, _wattsPerSecond) { }
         public PowerRampRate(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _wattsPerSecond, prefix) { }
-        public PowerRampRate(double val, Unit u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public PowerRampRate(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
         public static implicit operator PowerRampRate(double val) { return new PowerRampRate(val); }
         public static implicit operator PowerRampRate(Quantity mq)
         {
@@ -961,7 +961,7 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class Power : QuantityBase
     {
-        static Watt _watt = new Watt();
+        static Watt? _watt = new Watt();
         public Power(Power p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public Power(double val = 0.0) : base(val, _watt) { }
         public Power(double val = 0.0, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _watt, prefix) { }
@@ -1010,11 +1010,11 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class Capacitance : QuantityBase
     {
-        static Unit _farad = Units.Farad;
+        static Unit? _farad = Units.Farad;
         public Capacitance(Capacitance p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public Capacitance(double val) : base(val, _farad) { }
         public Capacitance(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _farad, prefix) { }
-        public Capacitance(double val, Unit u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public Capacitance(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
         public static implicit operator Capacitance(double val) { return new Capacitance(val); }
         public static implicit operator Capacitance(Quantity mq)
         {
@@ -1054,11 +1054,11 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class MagneticFluxIntensity : QuantityBase
     {
-        static Unit _siemens = Units.Siemens;
+        static Unit? _siemens = Units.Siemens;
         public MagneticFluxIntensity(MagneticFluxIntensity p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public MagneticFluxIntensity(double val) : base(val, _siemens) { }
         public MagneticFluxIntensity(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _siemens, prefix) { }
-        public MagneticFluxIntensity(double val, Unit u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public MagneticFluxIntensity(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
         public static implicit operator MagneticFluxIntensity(double val) { return new MagneticFluxIntensity(val); }
         public static implicit operator MagneticFluxIntensity(Quantity mq)
         {
@@ -1098,11 +1098,11 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class MagneticFluxDensity : QuantityBase
     {
-        static Unit _tesla = Units.Tesla;
+        static Unit? _tesla = Units.Tesla;
         public MagneticFluxDensity(MagneticFluxDensity p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public MagneticFluxDensity(double val) : base(val, _tesla) { }
         public MagneticFluxDensity(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _tesla, prefix) { }
-        public MagneticFluxDensity(double val, Unit u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public MagneticFluxDensity(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
         public static implicit operator MagneticFluxDensity(double val) { return new MagneticFluxDensity(val); }
         public static implicit operator MagneticFluxDensity(Quantity mq)
         {
@@ -1142,11 +1142,11 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class MagneticFlux : QuantityBase
     {
-        static Unit _weber = Units.Weber;
+        static Unit? _weber = Units.Weber;
         public MagneticFlux(MagneticFlux p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public MagneticFlux(double val) : base(val, _weber) { }
         public MagneticFlux(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _weber, prefix) { }
-        public MagneticFlux(double val, Unit u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public MagneticFlux(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
         public static implicit operator MagneticFlux(double val) { return new MagneticFlux(val); }
         public static implicit operator MagneticFlux(Quantity mq)
         {
@@ -1186,11 +1186,11 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class Inductance : QuantityBase
     {
-        static Unit _henry = Units.Henry;
+        static Unit? _henry = Units.Henry;
         public Inductance(Inductance p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public Inductance(double val) : base(val, _henry) { }
         public Inductance(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _henry, prefix) { }
-        public Inductance(double val, Unit u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public Inductance(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
         public static implicit operator Inductance(double val) { return new Inductance(val); }
         public static implicit operator Inductance(Quantity mq)
         {
@@ -1230,11 +1230,11 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class LuminousIntensity : QuantityBase
     {
-        static Unit _candela = Units.Candela;
+        static Unit? _candela = Units.Candela;
         public LuminousIntensity(LuminousIntensity p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public LuminousIntensity(double val) : base(val, _candela) { }
         public LuminousIntensity(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _candela, prefix) { }
-        public LuminousIntensity(double val, Unit u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public LuminousIntensity(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
         public static implicit operator LuminousIntensity(double val) { return new LuminousIntensity(val); }
         public static implicit operator LuminousIntensity(Quantity mq)
         {
@@ -1274,11 +1274,11 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class CatalyticActivity : QuantityBase
     {
-        static Unit _katal = Units.Katal;
+        static Unit? _katal = Units.Katal;
         public CatalyticActivity(CatalyticActivity p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public CatalyticActivity(double val) : base(val, _katal) { }
         public CatalyticActivity(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _katal, prefix) { }
-        public CatalyticActivity(double val, Unit u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public CatalyticActivity(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
         public static implicit operator CatalyticActivity(double val) { return new CatalyticActivity(val); }
         public static implicit operator CatalyticActivity(Quantity mq)
         {
@@ -1318,11 +1318,11 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class AmountOfSubstance : QuantityBase
     {
-        static Unit _mole = Units.Mole;
+        static Unit? _mole = Units.Mole;
         public AmountOfSubstance(AmountOfSubstance p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public AmountOfSubstance(double val) : base(val, _mole) { }
         public AmountOfSubstance(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _mole, prefix) { }
-        public AmountOfSubstance(double val, Unit u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public AmountOfSubstance(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
         public static implicit operator AmountOfSubstance(double val) { return new AmountOfSubstance(val); }
         public static implicit operator AmountOfSubstance(Quantity mq)
         {

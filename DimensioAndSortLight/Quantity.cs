@@ -21,56 +21,7 @@ namespace GreenOptimizer.DimensionAndSort
 
     }
 
-    public interface IDimension { }
-    public class LengthDimension : IDimension { }
-    public class MassDimension : IDimension { }
-    public class TimeDimension : IDimension { }
-    public class AreaDimension : IDimension { }
-    public class SpeedDimension : IDimension { }
-
-    public class Quantity<TDimension> where TDimension : IDimension
-    {
-        public double Value { get; }
-        public Unit Unit { get; }
-
-        public Quantity(double value, Unit unit)
-        {
-            Value = value;
-            Unit = unit;
-        }
-
-        public Quantity<TDimension> ToUnit(Unit targetUnit)
-        {
-            if (!Unit.SameDimension(targetUnit))
-                throw new IncompatibleUnits("Target unit is not compatible with this quantity's dimension.");
-
-            // Convert to SI, then to target unit
-            double valueInSI = Unit.ToSIUnit(Value);
-            double convertedValue = targetUnit.FromSIUnit(valueInSI);
-
-            return new Quantity<TDimension>(convertedValue, targetUnit);
-        }
-
-        public static Quantity<TDimension> operator +(Quantity<TDimension> a, Quantity<TDimension> b)
-        {
-            if (!a.Unit.Equals(b.Unit))
-                throw new IncompatibleUnits("Units must match for addition.");
-            return new Quantity<TDimension>(a.Value + b.Value, a.Unit);
-        }
-
-        public static Quantity<TDimension> operator -(Quantity<TDimension> a, Quantity<TDimension> b)
-        {
-            if (!a.Unit.Equals(b.Unit))
-                throw new IncompatibleUnits("Units must match for subtraction.");
-            return new Quantity<TDimension>(a.Value - b.Value, a.Unit);
-        }
-
-        public static Quantity<TDimension> operator *(double scalar, Quantity<TDimension> q)
-            => new Quantity<TDimension>(scalar * q.Value, q.Unit);
-
-        public static Quantity<TDimension> operator *(Quantity<TDimension> q, double scalar)
-            => new Quantity<TDimension>(q.Value * scalar, q.Unit);
-    }
+   
 
     public class QuantityBase : IComparable<QuantityBase>
     {
@@ -139,9 +90,19 @@ namespace GreenOptimizer.DimensionAndSort
         [JsonIgnore]
         public virtual double Value
         {
-            get { return (_valueInSIUnits/prefix.Factor - _unit.Offset)/_unit.Scale; }
+         
+            get
+            {
+                if(_unit != null)
+                    return ( _valueInSIUnits/prefix.Factor - _unit.Offset)/_unit.Scale;
+                else
+                {
+                    return double.NaN;
+                }
+            }
            
         }
+         
        
 
         public QuantityBase(double value, Unit unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity, string symbol = "")
@@ -338,7 +299,7 @@ namespace GreenOptimizer.DimensionAndSort
 
         public int CompareTo(QuantityBase? other)
         {
-            return ValueInSIUnits.CompareTo(other.ValueInSIUnits);
+            return ValueInSIUnits.CompareTo((double) other.ValueInSIUnits);
         }
 
         #endregion

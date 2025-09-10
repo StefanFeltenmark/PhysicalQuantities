@@ -125,7 +125,7 @@ namespace UnitTests
 
             string jsonStr = tw.ToString();
 
-            File.WriteAllText($"unittest{obj.GetType()}.json", jsonStr);
+        //    File.WriteAllText($"unittest{obj.GetType()}.json", jsonStr);
 
             T recreated = JsonConvert.DeserializeObject<T>(jsonStr, settings);
 
@@ -133,7 +133,7 @@ namespace UnitTests
             serializer.Serialize(tw, recreated);
             string jsonStr2 = tw.ToString();
 
-            File.WriteAllText($"unittest2{obj.GetType()}.json", jsonStr2);
+         //   File.WriteAllText($"unittest2{obj.GetType()}.json", jsonStr2);
 
             return recreated;
 

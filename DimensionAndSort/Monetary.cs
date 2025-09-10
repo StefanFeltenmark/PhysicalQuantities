@@ -4,10 +4,10 @@ namespace GreenOptimizer.DimensionAndSort
 {
     public class Currencies
     {
-        public static Euro Euro = new Euro();
-        public static USDollar USDollar = new USDollar();
-        public static SwedishCrown SwedishCrown = new SwedishCrown();
-        public static NorwegianCrown NorwegianCrown = new NorwegianCrown();
+        public static Euro? Euro = new Euro();
+        public static USDollar? USDollar = new USDollar();
+        public static SwedishCrown? SwedishCrown = new SwedishCrown();
+        public static NorwegianCrown? NorwegianCrown = new NorwegianCrown();
         public static TurkishLira TurkishLira = new TurkishLira();
     }
 
@@ -48,7 +48,7 @@ namespace GreenOptimizer.DimensionAndSort
             return clone;
         }
 
-        public static double ConversionRate(Currency fromCurrency, Currency toCurrency)
+        public static double ConversionRate(Currency? fromCurrency, Currency? toCurrency)
         {
             return fromCurrency.ExchangeRateToEur / toCurrency.ExchangeRateToEur;
         }
@@ -95,14 +95,14 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class MonetaryAmount : QuantityBase
     {
-        protected static Currency _euro = Currencies.Euro;
+        protected static Currency? _euro = Currencies.Euro;
 
         public MonetaryAmount(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity)
             : base(val, _euro, prefix)
         {
         }
 
-        public MonetaryAmount(double val, Unit unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity)
+        public MonetaryAmount(double val, Unit? unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity)
             : base(val, unit, prefix)
         {
         }
@@ -199,15 +199,15 @@ namespace GreenOptimizer.DimensionAndSort
             Unit = Units.Dimensionless;
         }
 
-        public PriceUnit(Currency currency, Unit quantityUnit)
+        public PriceUnit(Currency? currency, Unit? quantityUnit)
         {
             Currency = currency;
             Unit = quantityUnit.Clone();
         }
 
-        public Currency Currency { get; set; }
+        public Currency? Currency { get; set; }
 
-        public Unit Unit { get; set; }
+        public Unit? Unit { get; set; }
 
 
         public override string ToString()

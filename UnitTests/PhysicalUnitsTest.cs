@@ -600,7 +600,7 @@ namespace UnitTests
             Power p1 = new (1, Unit.SI_PrefixEnum.mega);
             Time t = new Time(3600);
 
-            Unit MWh = new MegaWattHour();
+            Unit? MWh = new MegaWattHour();
 
             Energy e = p1 * t;
 
@@ -631,8 +631,8 @@ namespace UnitTests
         [Fact]
         public void TestEnergy2()
         {
-            Unit GWh = new WattHour(Unit.SI_PrefixEnum.giga);
-            Unit MWh = new WattHour(Unit.SI_PrefixEnum.mega);
+            Unit? GWh = new WattHour(Unit.SI_PrefixEnum.giga);
+            Unit? MWh = new WattHour(Unit.SI_PrefixEnum.mega);
             Energy e1 = new(300, GWh);
             var e2 = e1.ConvertToUnit(MWh);
 
@@ -771,8 +771,8 @@ namespace UnitTests
         public void ReflectionTest()
         {
             Length l = new Length(10, new Metre(), Unit.SI_PrefixEnum.milli);
-            Unit matched = null;
-            foreach (Unit unit in Units.UnitList)
+            Unit? matched = null;
+            foreach (Unit? unit in Units.UnitList)
             {
                 if (l.Unit == unit)
                 {
@@ -791,8 +791,8 @@ namespace UnitTests
             Speed s = new Speed(3);
             var kinetic = 0.5 * m * s * s;
 
-            Unit matched = null;
-            foreach (Unit unit in Units.UnitList)
+            Unit? matched = null;
+            foreach (Unit? unit in Units.UnitList)
             {
                 if (kinetic.Unit == unit)
                 {
@@ -818,7 +818,7 @@ namespace UnitTests
 
         public class MyImpulseUnit : Unit
         {
-            public static readonly MyImpulseUnit myImpulseUnit = new MyImpulseUnit();
+            public static readonly MyImpulseUnit? myImpulseUnit = new MyImpulseUnit();
 
             private MyImpulseUnit() : base(1, 1, -1, 0, 0, 0, 0)
             {
@@ -828,7 +828,7 @@ namespace UnitTests
 
         private class MyImpulseQuantity : QuantityBase
         {
-            public MyImpulseQuantity(double val, Unit u) : base(val, u)
+            public MyImpulseQuantity(double val, Unit? u) : base(val, u)
             {
             }
         }

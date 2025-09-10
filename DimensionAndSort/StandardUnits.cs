@@ -2,11 +2,11 @@ namespace GreenOptimizer.DimensionAndSort
 {
     public class Units
     {
-        public static List<Unit> UnitList;
+        public static List<Unit?> UnitList;
 
         static Units()
         {
-            UnitList = new List<Unit>()
+            UnitList = new List<Unit?>()
             {
                 Metre, Kilogram, Second, Ampere, Kelvin, Joule
             };
@@ -15,52 +15,52 @@ namespace GreenOptimizer.DimensionAndSort
         public static class Lengths
         {
             public static readonly Metre Metre = new();
-            public static readonly Centimetre Centimetre = new();
-            public static readonly Unit Millimetre = new Metre(){ PrefixIndex = Unit.SI_PrefixEnum.milli, Scale = 1e-3};
-            public static readonly Unit Kilometre = new Metre() { PrefixIndex = Unit.SI_PrefixEnum.kilo, Scale = 1e3 };
+            public static readonly Centimetre? Centimetre = new();
+            public static readonly Unit? Millimetre = new Metre(){ PrefixIndex = Unit.SI_PrefixEnum.milli, Scale = 1e-3};
+            public static readonly Unit? Kilometre = new Metre() { PrefixIndex = Unit.SI_PrefixEnum.kilo, Scale = 1e3 };
         }
 
-        public static readonly Metre Metre = new();
-        public static Kilogram Kilogram = new Kilogram();
-        public static Second Second = new Second();
-        public static Ampere Ampere = new Ampere();
-        public static Kelvin Kelvin = new Kelvin();
-        public static Candela Candela = new Candela();
-        public static Mole Mole = new Mole();
-        public static Dimensionless Dimensionless = new Dimensionless();
-        public static QubicMetre QubicMetre = new QubicMetre();
-        public static QubicHectoMetre QubicHectoMetre = new QubicHectoMetre();
+        public static readonly Metre? Metre = new();
+        public static Kilogram? Kilogram = new Kilogram();
+        public static Second? Second = new Second();
+        public static Ampere? Ampere = new Ampere();
+        public static Kelvin? Kelvin = new Kelvin();
+        public static Candela? Candela = new Candela();
+        public static Mole? Mole = new Mole();
+        public static Dimensionless? Dimensionless = new Dimensionless();
+        public static QubicMetre? QubicMetre = new QubicMetre();
+        public static QubicHectoMetre? QubicHectoMetre = new QubicHectoMetre();
         public static QubicMetrePerSecond QubicMetrePerSecond = new QubicMetrePerSecond(); // volumeflow
-        public static KilogramPerSecond KilogramPerSecond = new KilogramPerSecond();       // massflow
+        public static KilogramPerSecond? KilogramPerSecond = new KilogramPerSecond();       // massflow
         public static SquareMetre SquareMetre = new SquareMetre();
-        public static HourEquivalent HourEquivalent = new HourEquivalent();
-        public static MPH Mph = new MPH();
+        public static HourEquivalent? HourEquivalent = new HourEquivalent();
+        public static MPH? Mph = new MPH();
         public static Knot Knot = new Knot();
-        public static Newton Newton = new Newton();
-        public static Pascal Pascal = new Pascal();
-        public static Joule Joule = new Joule();
-        public static Celsius Celsius = new Celsius();
-        public static Farenheit Farenheit = new Farenheit();
-        public static Minute Minute = new Minute();
-        public static Hour Hour = new Hour();
-        public static Ohm Ohm = new Ohm();
-        public static Volt Volt = new Volt();
+        public static Newton? Newton = new Newton();
+        public static Pascal? Pascal = new Pascal();
+        public static Joule? Joule = new Joule();
+        public static Celsius? Celsius = new Celsius();
+        public static Farenheit? Farenheit = new Farenheit();
+        public static Minute? Minute = new Minute();
+        public static Hour? Hour = new Hour();
+        public static Ohm? Ohm = new Ohm();
+        public static Volt? Volt = new Volt();
         public static Watt Watt = new Watt();
         public static MegaWatt MegaWatt = new MegaWatt();
         public static HorsePower HorsePower = new HorsePower();
-        public static Bar Bar = new Bar();
-        public static mmHg mmHg = new mmHg();
-        public static Litre Litre = new Litre();
-        public static Farad Farad = new Farad();
-        public static Siemens Siemens = new Siemens();
-        public static Weber Weber = new Weber();
-        public static Henry Henry = new Henry();
-        public static Katal Katal = new Katal();
-        public static Tesla Tesla = new Tesla();
+        public static Bar? Bar = new Bar();
+        public static mmHg? mmHg = new mmHg();
+        public static Litre? Litre = new Litre();
+        public static Farad? Farad = new Farad();
+        public static Siemens? Siemens = new Siemens();
+        public static Weber? Weber = new Weber();
+        public static Henry? Henry = new Henry();
+        public static Katal? Katal = new Katal();
+        public static Tesla? Tesla = new Tesla();
         public static BTU BTU = new BTU();
-        public static WattHour WattHour = new WattHour();
-        public static MegaWattHour MegaWattHour = new MegaWattHour();
-        public static Percent Percent = new Percent();
+        public static WattHour? WattHour = new WattHour();
+        public static MegaWattHour? MegaWattHour = new MegaWattHour();
+        public static Percent? Percent = new Percent();
     }
 
     public abstract class TimeUnit : Unit
@@ -464,7 +464,7 @@ namespace GreenOptimizer.DimensionAndSort
         }
 
         public override string ToString() { return Prefix + "Wh"; }
-        public override Unit Clone()
+        public override Unit? Clone()
         {
             return new WattHour(this.PrefixIndex);
         }
@@ -486,7 +486,7 @@ namespace GreenOptimizer.DimensionAndSort
             Scale = 1055.05585;
         }
         public override string ToString() { return Prefix + "BTU"; }
-        public override Unit Clone() { return new BTU(this.PrefixIndex); }
+        public override Unit? Clone() { return new BTU(this.PrefixIndex); }
     }
 
 

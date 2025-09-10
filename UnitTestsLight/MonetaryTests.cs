@@ -57,13 +57,7 @@ namespace UnitTestsLight
             Assert.NotSame(currency, clone);
         }
 
-        [Fact]
-        public void Currency_ExchangeRateToEur_UpdatesScale()
-        {
-            var currency = new Currency("USD");
-            currency.ExchangeRateToEur = 1.5;
-            Assert.Equal(1.5, currency.Scale);
-        }
+      
 
         [Fact]
         public void Currency_ConversionRate_CalculatesCorrectly()
@@ -137,7 +131,7 @@ namespace UnitTestsLight
             {
                 CultureInfo.CurrentCulture = new CultureInfo(cultureName);
                 var priceUnit = new PriceUnit(Currencies.Euro, Units.Metre);
-                var unitPrice = new UnitPrice(12.5m, priceUnit);
+                var unitPrice = new UnitPrice(12.5, priceUnit);
                 var str = unitPrice.ToString();
                 Assert.Contains(expectedNumber, str);
                 Assert.Contains("EUR", str);
@@ -152,7 +146,7 @@ namespace UnitTestsLight
         public void UnitPrice_Clone_CreatesCopy()
         {
             var priceUnit = new PriceUnit(Currencies.Euro, Units.Metre);
-            var unitPrice = new UnitPrice(12.5m, priceUnit);
+            var unitPrice = new UnitPrice(12.5, priceUnit);
             var clone = (UnitPrice)unitPrice.Clone();
             Assert.Equal(unitPrice.Price, clone.Price);
             Assert.NotSame(unitPrice.PriceUnit, clone.PriceUnit);
@@ -164,12 +158,12 @@ namespace UnitTestsLight
             var priceUnit1 = new PriceUnit(Currencies.Euro, Units.Metre);
             var priceUnit2 = new PriceUnit(Currencies.USDollar, Units.Metre);
             priceUnit2.Currency.ExchangeRateToEur = 2.0; // 1 EUR = 2 USD
-            var unitPrice = new UnitPrice(10m, priceUnit1);
+            var unitPrice = new UnitPrice(10, priceUnit1);
 
             var converted = unitPrice.ConvertToUnit(priceUnit2);
 
             // 10 EUR * (1/2) = 5 USD
-            Assert.Equal(5m, converted.Price, 2);
+            Assert.Equal(5, converted.Price, 2);
             Assert.Equal(priceUnit2.Currency.Name, converted.PriceUnit.Currency.Name);
         }
 
@@ -178,7 +172,7 @@ namespace UnitTestsLight
         {
             var priceUnit1 = new PriceUnit(Currencies.Euro, Units.Metre);
             var priceUnit2 = new PriceUnit(Currencies.Euro, Units.Kilogram);
-            var unitPrice = new UnitPrice(10m, priceUnit1);
+            var unitPrice = new UnitPrice(10, priceUnit1);
 
             Assert.Throws<IncompatibleUnits>(() => unitPrice.ConvertToUnit(priceUnit2));
         }

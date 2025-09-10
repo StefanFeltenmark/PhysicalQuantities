@@ -328,7 +328,7 @@ namespace GreenOptimizer.DimensionAndSort
         }
 
 
-        public static Unit operator *(Unit q1, Unit q2)
+        public static Unit operator *(Unit? q1, Unit? q2)
         {
             Unit u = new Unit(q1._dimensions[(int)BaseUnitEnum.metre].Exponent + q2._dimensions[(int)BaseUnitEnum.metre].Exponent,
                                 q1._dimensions[(int)BaseUnitEnum.kilogram].Exponent + q2._dimensions[(int)BaseUnitEnum.kilogram].Exponent,
@@ -344,7 +344,7 @@ namespace GreenOptimizer.DimensionAndSort
             return u;
         }
 
-        public static Unit operator /(Unit q1, Unit q2)
+        public static Unit operator /(Unit? q1, Unit? q2)
         {
             Unit u = new Unit(q1._dimensions[(int)BaseUnitEnum.metre].Exponent - q2._dimensions[(int)BaseUnitEnum.metre].Exponent,
                                 q1._dimensions[(int)BaseUnitEnum.kilogram].Exponent - q2._dimensions[(int)BaseUnitEnum.kilogram].Exponent,
@@ -357,7 +357,7 @@ namespace GreenOptimizer.DimensionAndSort
             return u;
         }
 
-        public static Unit operator +(Unit q1, int n)
+        public static Unit operator +(Unit? q1, int n)
         {
             return new Unit(q1._dimensions[(int)BaseUnitEnum.metre].Exponent * n,
                                 q1._dimensions[(int)BaseUnitEnum.kilogram].Exponent * n,
@@ -399,7 +399,7 @@ namespace GreenOptimizer.DimensionAndSort
         }
 
 
-        public static Unit? AsBaseUnit(Unit u)
+        public static Unit? AsBaseUnit(Unit? u)
         {
             Unit? bu = null;
 
@@ -414,7 +414,7 @@ namespace GreenOptimizer.DimensionAndSort
             return bu;
         }
 
-        public static Unit? AsDerivedUnit(Unit u)
+        public static Unit? AsDerivedUnit(Unit? u)
         {
             Unit? du = null;
             try
@@ -461,7 +461,7 @@ namespace GreenOptimizer.DimensionAndSort
         }
 
         #region IEquatable<Unit> Members
-        public bool SameDimension(Unit other)
+        public bool SameDimension(Unit? other)
         {
             if(other == null) return false;
 
@@ -532,7 +532,7 @@ namespace GreenOptimizer.DimensionAndSort
 
         #endregion
 
-        public virtual Unit Clone()
+        public virtual Unit? Clone()
         {
             return new Unit(_dimensions[0].Exponent, _dimensions[1].Exponent, _dimensions[2].Exponent, _dimensions[3].Exponent, _dimensions[4].Exponent, _dimensions[5].Exponent, _dimensions[6].Exponent, _scale, _offset, _prefixIndex);
         }

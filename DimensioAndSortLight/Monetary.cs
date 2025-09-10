@@ -17,7 +17,7 @@
         {
             Name = code;
             _exchangeRateToEUR = 1.0;
-            Scale = _exchangeRateToEUR;
+           // Scale = _exchangeRateToEUR;
         }
 
         public string Name { get; set; }
@@ -29,7 +29,7 @@
             set
             {
                 _exchangeRateToEUR = value;
-                Scale = _exchangeRateToEUR;
+               // Scale = _exchangeRateToEUR;
             }
         }
 
@@ -147,13 +147,13 @@
 
     public class UnitPrice : ICloneable
     {
-        public UnitPrice(decimal price, PriceUnit priceUnit)
+        public UnitPrice(double price, PriceUnit priceUnit)
         {
             Price = price;
             PriceUnit = priceUnit;
         }
 
-        public decimal Price { get; set; }
+        public double Price { get; set; }
 
         public PriceUnit PriceUnit { get; set; }
 
@@ -176,7 +176,7 @@
 
                 var priceConversionRate = Currency.ConversionRate(PriceUnit.Currency, newunit.Currency);
 
-                var newValue = Price * ((decimal)priceConversionRate) * ((decimal)factor1);
+                var newValue = Price * ((double)priceConversionRate) * ((double)factor1);
 
                 p = new UnitPrice(newValue, newunit);
             }

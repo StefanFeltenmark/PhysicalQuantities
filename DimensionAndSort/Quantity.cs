@@ -10,7 +10,7 @@ namespace DimensionAndSort
 {
     public class Quantity : QuantityBase
     {
-        public Quantity(double val, Unit unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity, string symbol = "") : base(val, unit, prefix, symbol)
+        public Quantity(double val, Unit? unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity, string symbol = "") : base(val, unit, prefix, symbol)
         {
 
         }
@@ -25,14 +25,14 @@ namespace DimensionAndSort
     public class QuantityBase :  IEquatable<QuantityBase> //,IComparable<QuantityBase>
     {
         #region members
-        protected Unit _unit;
+        protected Unit? _unit;
         protected double _valueInSIUnits;
         protected Unit.SI_PrefixEnum _prefixIndex = Unit.SI_PrefixEnum.unity;
         #endregion
 
         public bool Equals(QuantityBase? other)
         {
-            bool ok1 = _unit.Equals(other._unit);
+            bool ok1 = _unit.Equals(other?._unit);
           //  bool ok3 = _prefixIndex == other._prefixIndex;
             bool ok2 = Math.Abs(ValueInSIUnits - other.ValueInSIUnits) < 1e-9;
             return ok1 && ok2; //&& ok3;
@@ -58,7 +58,7 @@ namespace DimensionAndSort
             }
         }
 
-        public Unit Unit
+        public Unit? Unit
         {
             get { return _unit; }
             set { _unit = value; }
@@ -83,7 +83,7 @@ namespace DimensionAndSort
             set { _valueInSIUnits = value; }
         }
 
-        public double ToSIUnit(double value, Unit unit, Unit.SI_PrefixEnum prefixIndex = Unit.SI_PrefixEnum.unity)
+        public double ToSIUnit(double value, Unit? unit, Unit.SI_PrefixEnum prefixIndex = Unit.SI_PrefixEnum.unity)
         {
             return Unit.Prefixes[(int) prefixIndex].Factor * (_unit.Scale * value + _unit.Offset);
         }
@@ -96,7 +96,7 @@ namespace DimensionAndSort
         }
 
         
-        public QuantityBase(double value, Unit unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity, string symbol = "")
+        public QuantityBase(double value, Unit? unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity, string symbol = "")
         {
             _unit = unit;
             _valueInSIUnits = ToSIUnit(value, unit, prefix);
@@ -114,7 +114,7 @@ namespace DimensionAndSort
             return this;
         }
 
-        public void SetUnit(Unit newUnit)
+        public void SetUnit(Unit? newUnit)
         {
             if (_unit.SameDimension(newUnit))
             {
@@ -127,7 +127,7 @@ namespace DimensionAndSort
             }
         }
 
-        public bool TrySetUnit(Unit newUnit)
+        public bool TrySetUnit(Unit? newUnit)
         {
             if (newUnit.SameDimension(_unit))
             {
@@ -142,13 +142,13 @@ namespace DimensionAndSort
         
         }
 
-        public Quantity ConvertToUnit(Unit newUnit)
+        public Quantity ConvertToUnit(Unit? newUnit)
         {
             Quantity q;
             if (newUnit.SameDimension(_unit))
             {
                 double value = newUnit.FromSIUnit(ValueInSIUnits);
-                Unit unit = newUnit;
+                Unit? unit = newUnit;
                 Unit.SI_PrefixEnum prefixIndex = Unit.SI_PrefixEnum.unity;
                 q = new Quantity(value, unit, prefixIndex);
             }
@@ -205,7 +205,7 @@ namespace DimensionAndSort
 
         public static Quantity operator *(QuantityBase q1, QuantityBase q2)
         {
-            Unit prodUnit = q1.Unit * q2.Unit;
+            Unit? prodUnit = q1.Unit * q2.Unit;
 
             double val = (q1.ValueInSIUnits * q2.ValueInSIUnits) / prodUnit.Scale;
 
@@ -214,7 +214,7 @@ namespace DimensionAndSort
 
         public static Quantity operator /(QuantityBase q1, QuantityBase q2)
         {
-            Unit divUnit = q1.Unit / q2.Unit;
+            Unit? divUnit = q1.Unit / q2.Unit;
 
             double divVal = (q1.ValueInSIUnits / q2.ValueInSIUnits) / divUnit.Scale;
 

@@ -334,7 +334,22 @@
     #endregion
 
 
-   
+    
+    public abstract class DensityUnit : Unit
+    {
+        protected DensityUnit() : base(-3, 1, 0)
+        {
+        }
+    }
+
+    
+    public class KilogramPerCubicMetre : DensityUnit
+    {
+        public override string ToString()
+        {
+            return "kg/m3";
+        }
+    }
 
     #endregion
 }

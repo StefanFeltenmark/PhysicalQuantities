@@ -154,6 +154,11 @@
     public class Percentage : QuantityBase
     {
         protected static Percent _perc = Units.Percent;
+
+        public Percentage()
+        {
+            
+        }
         public Percentage(double val) : base(val, Units.Percent, Unit.SI_PrefixEnum.unity, "%") { }
 
         public static implicit operator Percentage(double val) { return new Percentage(val); }
@@ -174,6 +179,10 @@
             return new Percentage(Value);
         }
 
+        public double ToFraction()
+        {
+            return Value / 100.0;
+        }
 
     }
 
@@ -794,6 +803,12 @@
         public static Power operator -(Power q1, Power q2)
         {
             return new Power(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+        }
+
+
+        public static Power operator -(Power q1)
+        {
+            return new Power(-q1.Value, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
