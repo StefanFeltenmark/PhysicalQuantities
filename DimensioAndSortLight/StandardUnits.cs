@@ -312,7 +312,7 @@
     {
         public MegaWattHour() : base(2, 1, -2)
         {
-            Scale = 1e6;
+            Scale = 1e6*3600;
         }
         public override string ToString() { return "MWh"; }
     }

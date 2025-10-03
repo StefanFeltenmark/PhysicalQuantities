@@ -431,6 +431,17 @@ namespace UnitTests
         }
 
         [Fact]
+        public void TestPowerToEnergy()
+        {
+            Power p = new Power(100, Units.MegaWatt);
+            Time t = new Time(0.8, Units.Hour);
+
+            Energy e = (p * t).CovertToUnit(Units.MegaWattHour);
+
+            Assert.Equal(80, e.Value);
+        }
+
+        [Fact]
         public void TestUnitPrice1()
         {
             var p1 = new UnitPrice(100, new PriceUnit(Currencies.Euro, new MegaWattHour()));
