@@ -62,6 +62,25 @@ namespace GreenOptimizer.DimensionAndSort
         }
     }
 
+    public class Frequency : QuantityBase
+    {
+        static Hertz? _hertz = Units.Hertz;
+        public Frequency(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _hertz, prefix) { }
+        public Frequency(double val, Unit? unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, unit, prefix) { }
+        public static implicit operator Frequency(double val) { return new Frequency(val); }
+        public static implicit operator Frequency(Quantity mq)
+        {
+            if (mq.Unit!.SameDimension(_hertz))
+                return new Frequency(mq.Value, mq.Unit, mq.PrefixIndex);
+            throw new IncompatibleUnits();
+        }
+        public static Frequency operator +(Frequency q1, Frequency q2)
+            => new Frequency(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+        public static Frequency operator -(Frequency q1, Frequency q2)
+            => new Frequency(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+        public override QuantityBase Clone() => new Frequency(Value, _unit, _prefixIndex);
+    }
+
     public class Percentage : QuantityBase
     {
         protected static Percent? _perc = Units.Percent;

@@ -203,6 +203,65 @@ namespace UnitTests
         }
 
         // -------------------------------------------------------------------------
+        // JSON — prefix preservation
+        // -------------------------------------------------------------------------
+
+        [Fact]
+        public void Json_PrefixedUnit_RoundTripPreservesValue()
+        {
+            // 1.5 MW stored as Watt + mega prefix — value must survive round-trip
+            var p = new Power(1.5, Unit.SI_PrefixEnum.mega);
+            Quantity result = CompactJsonRoundTrip(p);
+            Assert.Equal(p.ValueInSIUnits, result.ValueInSIUnits, precision: 6);
+        }
+
+        [Fact]
+        public void Json_PrefixedUnit_OutputIncludesPField()
+        {
+            var p = new Power(1.5, Unit.SI_PrefixEnum.mega);
+            string json = Serialize(p);
+            JObject jo = JObject.Parse(json);
+            Assert.True(jo.ContainsKey("p"), "compact format should include 'p' when prefix != unity");
+            Assert.Equal((int)Unit.SI_PrefixEnum.mega, jo["p"]!.Value<int>());
+        }
+
+        [Fact]
+        public void Json_UnityPrefix_NoPField()
+        {
+            var p = new Power(1500, Units.Watt);
+            string json = Serialize(p);
+            JObject jo = JObject.Parse(json);
+            Assert.False(jo.ContainsKey("p"), "unity prefix should not write 'p'");
+        }
+
+        // -------------------------------------------------------------------------
+        // New quantity types — Frequency and ElectricCharge
+        // -------------------------------------------------------------------------
+
+        [Fact]
+        public void Registry_HertzAndCoulombAreRegistered()
+        {
+            Assert.NotNull(UnitRegistry.TryGet("Hertz"));
+            Assert.NotNull(UnitRegistry.TryGet("Coulomb"));
+        }
+
+        [Fact]
+        public void Json_Frequency_RoundTrip()
+        {
+            var f = new Frequency(50, Units.Hertz);
+            Quantity result = CompactJsonRoundTrip(f);
+            Assert.Equal(f.ValueInSIUnits, result.ValueInSIUnits, precision: 6);
+        }
+
+        [Fact]
+        public void Json_ElectricCharge_RoundTrip()
+        {
+            var q = new ElectricCharge(3600, Units.Coulomb); // 1 Ah
+            Quantity result = CompactJsonRoundTrip(q);
+            Assert.Equal(q.ValueInSIUnits, result.ValueInSIUnits, precision: 6);
+        }
+
+        // -------------------------------------------------------------------------
         // Helpers
         // -------------------------------------------------------------------------
 

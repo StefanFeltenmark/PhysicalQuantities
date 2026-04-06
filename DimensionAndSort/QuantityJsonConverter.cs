@@ -38,6 +38,12 @@ namespace GreenOptimizer.DimensionAndSort
                 writer.WriteValue(q.Value);
                 writer.WritePropertyName("u");
                 writer.WriteValue(unitName);
+                // Preserve prefix so round-trips restore the correct SI value
+                if (q.PrefixIndex != Unit.SI_PrefixEnum.unity)
+                {
+                    writer.WritePropertyName("p");
+                    writer.WriteValue((int)q.PrefixIndex);
+                }
             }
             else
             {
@@ -57,7 +63,7 @@ namespace GreenOptimizer.DimensionAndSort
                     writer.WriteValue(q.Unit.Scale);
                     writer.WritePropertyName("o");
                     writer.WriteValue(q.Unit.Offset);
-                    writer.WritePropertyName("p");
+                    writer.WritePropertyName("fp");
                     writer.WriteValue((int)q.Unit.PrefixIndex);
                 }
             }
@@ -75,7 +81,8 @@ namespace GreenOptimizer.DimensionAndSort
                 // Compact format
                 double value = jo["v"]!.Value<double>();
                 Unit? unit = UnitRegistry.TryGet(jo["u"]!.Value<string>());
-                return new Quantity(value, unit);
+                var prefixIndex = (Unit.SI_PrefixEnum)(jo["p"]?.Value<int>() ?? (int)Unit.SI_PrefixEnum.unity);
+                return new Quantity(value, unit, prefixIndex);
             }
             else
             {
@@ -87,7 +94,7 @@ namespace GreenOptimizer.DimensionAndSort
                 {
                     double scale = jo["s"]?.Value<double>() ?? 1.0;
                     double offset = jo["o"]?.Value<double>() ?? 0.0;
-                    int prefix = jo["p"]?.Value<int>() ?? (int)Unit.SI_PrefixEnum.unity;
+                    int fp = jo["fp"]?.Value<int>() ?? (int)Unit.SI_PrefixEnum.unity;
 
                     // Construct unit from raw dimensions; scale already encodes the prefix factor
                     unit = new Unit(
@@ -96,7 +103,7 @@ namespace GreenOptimizer.DimensionAndSort
                         dims[6].Value<int>());
                     unit.Scale = scale;
                     unit.Offset = offset;
-                    unit.PrefixIndex = (Unit.SI_PrefixEnum)prefix;
+                    unit.PrefixIndex = (Unit.SI_PrefixEnum)fp;
                 }
 
                 // Build a Quantity from SI value directly

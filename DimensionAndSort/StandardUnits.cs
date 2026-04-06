@@ -61,6 +61,8 @@ namespace GreenOptimizer.DimensionAndSort
         public static WattHour? WattHour = new WattHour();
         public static MegaWattHour? MegaWattHour = new MegaWattHour();
         public static Percent? Percent = new Percent();
+        public static Hertz? Hertz = new Hertz();
+        public static Coulomb? Coulomb = new Coulomb();
     }
 
     public abstract class TimeUnit : Unit

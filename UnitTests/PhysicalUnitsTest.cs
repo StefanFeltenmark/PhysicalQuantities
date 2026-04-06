@@ -20,7 +20,7 @@ namespace UnitTests
 
             var l3 = l1 + l2;
 
-            Assert.True(l3.Unit.Equals(Units.Metre));
+            Assert.True(l3.Unit!.Equals(Units.Metre));
         }
 
         [Fact]
@@ -62,9 +62,9 @@ namespace UnitTests
 
             var l5 = l2 + l1;
 
-          
 
-            Assert.True(l5.Unit.Equals(Units.Metre));
+
+            Assert.True(l5.Unit!.Equals(Units.Metre));
 
         }
 
@@ -77,7 +77,7 @@ namespace UnitTests
 
             var l5 = l2 + l1;
 
-            Assert.True(l5.Unit.Equals(Units.Metre));
+            Assert.True(l5.Unit!.Equals(Units.Metre));
 
             var l6 = l5.ConvertToUnit(Units.Lengths.Kilometre);
 
@@ -98,7 +98,7 @@ namespace UnitTests
 
             Volume v1 = l1 * l2 * l3;
             
-            Assert.True(v1.Unit.Equals(Units.QubicMetre));
+            Assert.True(v1.Unit!.Equals(Units.QubicMetre));
 
             Assert.Throws<IncompatibleUnits>(() =>
                 {
@@ -126,7 +126,7 @@ namespace UnitTests
 
             DimensionlessQuantity r = l2 / l1;
 
-            Assert.True(r.Unit.SameDimension(Units.Dimensionless));
+            Assert.True(r.Unit!.SameDimension(Units.Dimensionless));
         }
 
         [Fact]
@@ -139,7 +139,7 @@ namespace UnitTests
             var a = l1 * l2;
 
             Assert.True(a.Value.Equals(0.1));
-            Assert.True(a.Unit.Equals(Units.SquareMetre));
+            Assert.True(a.Unit!.Equals(Units.SquareMetre));
 
         }
 
@@ -168,7 +168,7 @@ namespace UnitTests
             
             e.SetPrefix(Unit.SI_PrefixEnum.giga);
 
-            Assert.True(e.Unit.SameDimension(Units.WattHour));
+            Assert.True(e.Unit!.SameDimension(Units.WattHour));
 
         }
 
@@ -251,7 +251,7 @@ namespace UnitTests
 
             var v = new Volume(1000);
 
-            Density d = null;
+            Density? d = null;
 
             try
             {
@@ -318,7 +318,7 @@ namespace UnitTests
         {
             Energy kinetic = (new Mass(10)) * QuantityBase.Pow(new Speed(10), 2) / (new DimensionlessQuantity(2));
 
-            Energy potential = null;
+            Energy? potential = null;
 
             var m2 = new Mass(91);
             var gravity = new Acceleration(9.82);
@@ -334,7 +334,7 @@ namespace UnitTests
             }
 
             //  potential.SetUnit(Units.Joule);
-            potential.SetPrefix(Unit.SI_PrefixEnum.kilo);
+            potential!.SetPrefix(Unit.SI_PrefixEnum.kilo);
         }
 
         [Fact]
@@ -347,7 +347,7 @@ namespace UnitTests
             Voltage U = R * I;
 
             Assert.Equal(5,U.Value,2);
-            Assert.True(U.Unit.Equals(Units.Volt));
+            Assert.True(U.Unit!.Equals(Units.Volt));
         }
 
         [Fact]
@@ -461,7 +461,7 @@ namespace UnitTests
 
             var p1 = new Power(100, u1);
 
-            Assert.True(p1.Unit.Equals(Units.Watt));
+            Assert.True(p1.Unit!.Equals(Units.Watt));
         }
 
         [Fact]
@@ -471,7 +471,7 @@ namespace UnitTests
 
             var p2 = new Power(100, u, Unit.SI_PrefixEnum.mega);
 
-            Assert.True(p2.Unit.Equals(Units.Watt));
+            Assert.True(p2.Unit!.Equals(Units.Watt));
         }
 
         [Fact]
@@ -1053,6 +1053,64 @@ namespace UnitTests
             // Should select mega prefix so display value is close to 1
             Assert.True(Math.Abs(p.Value - 1.5) < 0.01);
             Assert.Equal(Unit.SI_PrefixEnum.mega, p.PrefixIndex);
+        }
+
+        // ── Frequency ─────────────────────────────────────────────────────────
+
+        [Fact]
+        public void TestFrequencyAddition()
+        {
+            var f1 = new Frequency(440); // A4 note
+            var f2 = new Frequency(110);
+            Frequency f3 = f1 + f2;
+            Assert.True(Math.Abs(f3.ValueInSIUnits - 550.0) < 1e-9);
+        }
+
+        [Fact]
+        public void TestFrequencyPeriod()
+        {
+            // T = 1/f  → period of 50 Hz grid is 0.02 s
+            var f = new Frequency(50);
+            var T = 1.0 / f;
+            Assert.True(Math.Abs(T.ValueInSIUnits - 0.02) < 1e-9);
+        }
+
+        [Fact]
+        public void TestFrequencyKilohertz()
+        {
+            var f = new Frequency(1, Unit.SI_PrefixEnum.kilo); // 1 kHz
+            Assert.True(Math.Abs(f.ValueInSIUnits - 1000.0) < 1e-9);
+        }
+
+        // ── ElectricCharge ────────────────────────────────────────────────────
+
+        [Fact]
+        public void TestElectricChargeFromCurrentAndTime()
+        {
+            // Q = I × t  → 2 A for 30 s = 60 C
+            var I = new Current(2);
+            var t = new Time(30);
+            var Q = I * t;
+            Assert.True(Q.Unit!.SameDimension(Units.Coulomb));
+            Assert.True(Math.Abs(Q.ValueInSIUnits - 60.0) < 1e-9);
+        }
+
+        [Fact]
+        public void TestElectricChargeAddition()
+        {
+            var q1 = new ElectricCharge(1000);
+            var q2 = new ElectricCharge(2000);
+            ElectricCharge q3 = q1 + q2;
+            Assert.True(Math.Abs(q3.ValueInSIUnits - 3000.0) < 1e-9);
+        }
+
+        [Fact]
+        public void TestAmpereHourConversion()
+        {
+            // 1 Ah = 3600 C
+            var q = new ElectricCharge(1, new AmpereHour());
+            ElectricCharge inCoulombs = q.ConvertToUnit(Units.Coulomb);
+            Assert.True(Math.Abs(inCoulombs.ValueInSIUnits - 3600.0) < 1e-9);
         }
 
         // ── IncompatibleUnits for electrical types ─────────────────────────────

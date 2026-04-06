@@ -100,11 +100,11 @@ namespace UnitTests
 
             File.WriteAllText("unittest.json", jsonStr);
 
-            T recreated = JsonConvert.DeserializeObject<T>(jsonStr, settings);
+            T recreated = JsonConvert.DeserializeObject<T>(jsonStr!, settings)!;
 
             tw = new StringWriter();
             serializer.Serialize(tw, recreated);
-            string jsonStr2 = tw.ToString();
+            string jsonStr2 = tw.ToString()!;
 
             File.WriteAllText("unittest2.json", jsonStr2);
 

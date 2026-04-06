@@ -353,4 +353,23 @@ namespace GreenOptimizer.DimensionAndSort
             return new Inductance(this);
         }
     }
+
+    public class ElectricCharge : QuantityBase
+    {
+        static Unit? _coulomb = Units.Coulomb;
+        public ElectricCharge(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _coulomb, prefix) { }
+        public ElectricCharge(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public static implicit operator ElectricCharge(double val) { return new ElectricCharge(val); }
+        public static implicit operator ElectricCharge(Quantity mq)
+        {
+            if (mq.Unit!.SameDimension(_coulomb))
+                return new ElectricCharge(mq.Value, mq.Unit, mq.PrefixIndex);
+            throw new IncompatibleUnits();
+        }
+        public static ElectricCharge operator +(ElectricCharge q1, ElectricCharge q2)
+            => new ElectricCharge(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+        public static ElectricCharge operator -(ElectricCharge q1, ElectricCharge q2)
+            => new ElectricCharge(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+        public override QuantityBase Clone() => new ElectricCharge(Value, _unit, _prefixIndex);
+    }
 }
