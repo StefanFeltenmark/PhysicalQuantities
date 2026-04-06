@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DimensionAndSort\DimensionAndSort.csproj" />
+    <ProjectReference Include="..\DimensionAndSort.Protobuf\DimensionAndSort.Protobuf.csproj" />
   </ItemGroup>
 
 </Project>
