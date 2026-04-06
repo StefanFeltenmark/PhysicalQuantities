@@ -1,8 +1,8 @@
 
-# Dimension and Sort
+# PhysicalQuantities
 
-DimensionAndSort is a package written in C# for representing physical quantities in a consistent way.
+PhysicalQuantities is a package written in C# for representing physical quantities in a consistent way.
 
 It is written and maintained by Stefan Feltenmark, stefan@feltenmark.se
 
-Copyright 2023
+Copyright 2026
