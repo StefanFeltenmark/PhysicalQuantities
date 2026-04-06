@@ -12,9 +12,9 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator LuminousIntensity(double val) { return new LuminousIntensity(val); }
         public static implicit operator LuminousIntensity(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_candela))
+            if (mq.Unit!.SameDimension(_candela))
             {
-                if (mq.Unit == _candela)
+                if (mq.Unit! ==_candela)
                 {
                     return new LuminousIntensity(mq.Value, _candela, mq.PrefixIndex);
                 }
@@ -32,12 +32,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static LuminousIntensity operator +(LuminousIntensity q1, LuminousIntensity q2)
         {
-            return new LuminousIntensity(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new LuminousIntensity(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static LuminousIntensity operator -(LuminousIntensity q1, LuminousIntensity q2)
         {
-            return new LuminousIntensity(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new LuminousIntensity(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
@@ -56,9 +56,9 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator CatalyticActivity(double val) { return new CatalyticActivity(val); }
         public static implicit operator CatalyticActivity(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_katal))
+            if (mq.Unit!.SameDimension(_katal))
             {
-                if (mq.Unit == _katal)
+                if (mq.Unit! ==_katal)
                 {
                     return new CatalyticActivity(mq.Value, _katal, mq.PrefixIndex);
                 }
@@ -76,12 +76,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static CatalyticActivity operator +(CatalyticActivity q1, CatalyticActivity q2)
         {
-            return new CatalyticActivity(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new CatalyticActivity(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static CatalyticActivity operator -(CatalyticActivity q1, CatalyticActivity q2)
         {
-            return new CatalyticActivity(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new CatalyticActivity(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
@@ -100,9 +100,9 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator AmountOfSubstance(double val) { return new AmountOfSubstance(val); }
         public static implicit operator AmountOfSubstance(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_mole))
+            if (mq.Unit!.SameDimension(_mole))
             {
-                if (mq.Unit == _mole)
+                if (mq.Unit! ==_mole)
                 {
                     return new AmountOfSubstance(mq.Value, _mole, mq.PrefixIndex);
                 }
@@ -120,12 +120,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static AmountOfSubstance operator +(AmountOfSubstance q1, AmountOfSubstance q2)
         {
-            return new AmountOfSubstance(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new AmountOfSubstance(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static AmountOfSubstance operator -(AmountOfSubstance q1, AmountOfSubstance q2)
         {
-            return new AmountOfSubstance(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new AmountOfSubstance(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()

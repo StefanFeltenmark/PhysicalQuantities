@@ -13,7 +13,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator Length(double val) { return new Length(val); }
         public static implicit operator Length(Quantity mq)
         {
-            if (mq.Unit.SameDimension(Units.Metre))
+            if (mq.Unit!.SameDimension(Units.Metre))
             {
                 return new Length(mq.Value, mq.Unit, mq.PrefixIndex);
             }
@@ -24,12 +24,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static Length operator +(Length q1, Length q2)
         {
-            return new Length(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Length(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static Length operator -(Length q1, Length q2)
         {
-            return new Length(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Length(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static Length operator -(Length q1)
@@ -59,7 +59,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator Mass(double val) { return new Mass(val); }
         public static implicit operator Mass(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_kilo))
+            if (mq.Unit!.SameDimension(_kilo))
             {
                 return new Mass(mq.Value, mq.Unit, mq.PrefixIndex);
             }
@@ -70,12 +70,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static Mass operator +(Mass q1, Mass q2)
         {
-            return new Mass(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Mass(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static Mass operator -(Mass q1, Mass q2)
         {
-            return new Mass(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Mass(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
@@ -99,7 +99,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator Area(double val) { return new Area(val); }
         public static implicit operator Area(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_squareMetreUnit))
+            if (mq.Unit!.SameDimension(_squareMetreUnit))
             {
                 return new Area(mq.Value, mq.Unit, mq.PrefixIndex);
             }
@@ -110,12 +110,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static Area operator +(Area q1, Area q2)
         {
-            return new Area(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Area(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static Area operator -(Area q1, Area q2)
         {
-            return new Area(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Area(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
@@ -137,7 +137,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator Volume(double val) { return new Volume(val); } // NB lose prefix!
         public static implicit operator Volume(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_qubicMetreUnit))
+            if (mq.Unit!.SameDimension(_qubicMetreUnit))
             {
                 return new Volume(mq.Value, mq.Unit, mq.PrefixIndex);
             }
@@ -148,12 +148,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static Volume operator +(Volume q1, Volume q2)
         {
-            return new Volume(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits), q1.Unit, q1.PrefixIndex);
+            return new Volume(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits), q1.Unit, q1.PrefixIndex);
         }
 
         public static Volume operator -(Volume q1, Volume q2)
         {
-            return new Volume(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits), q1.Unit, q1.PrefixIndex);
+            return new Volume(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits), q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
@@ -176,7 +176,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator VolumeFlow(double val) { return new VolumeFlow(val); }
         public static implicit operator VolumeFlow(Quantity mq)
         {
-            if (mq.Unit.SameDimension(new QubicMetrePerSecond()))
+            if (mq.Unit!.SameDimension(new QubicMetrePerSecond()))
             {
                 return new VolumeFlow(mq.Value, mq.Unit, mq.PrefixIndex);
             }
@@ -187,12 +187,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static VolumeFlow operator +(VolumeFlow q1, VolumeFlow q2)
         {
-            return new VolumeFlow(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new VolumeFlow(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static VolumeFlow operator -(VolumeFlow q1, VolumeFlow q2)
         {
-            return new VolumeFlow(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new VolumeFlow(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
@@ -209,7 +209,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator MassFlow(double val) { return new MassFlow(val); }
         public static implicit operator MassFlow(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_kilogramPerSecondUnit))
+            if (mq.Unit!.SameDimension(_kilogramPerSecondUnit))
             {
                 return new MassFlow(mq.Value, mq.Unit, mq.PrefixIndex);
             }
@@ -220,12 +220,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static MassFlow operator +(MassFlow q1, MassFlow q2)
         {
-            return new MassFlow(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new MassFlow(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static MassFlow operator -(MassFlow q1, MassFlow q2)
         {
-            return new MassFlow(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new MassFlow(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
@@ -243,7 +243,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator Speed(double val) { return new Speed(val); }
         public static implicit operator Speed(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_metrePerSecond))
+            if (mq.Unit!.SameDimension(_metrePerSecond))
             {
                 return new Speed(mq.Value, mq.Unit, mq.PrefixIndex);
             }
@@ -254,12 +254,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static Speed operator +(Speed q1, Speed q2)
         {
-            return new Speed(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Speed(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static Speed operator -(Speed q1, Speed q2)
         {
-            return new Speed(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Speed(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
@@ -277,7 +277,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator Acceleration(double val) { return new Acceleration(val); }
         public static implicit operator Acceleration(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_metrePerSecond2))
+            if (mq.Unit!.SameDimension(_metrePerSecond2))
             {
                 return new Acceleration(mq.Value, mq.Unit, mq.PrefixIndex);
             }
@@ -288,12 +288,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static Acceleration operator +(Acceleration q1, Acceleration q2)
         {
-            return new Acceleration(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Acceleration(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static Acceleration operator -(Acceleration q1, Acceleration q2)
         {
-            return new Acceleration(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Acceleration(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
@@ -311,7 +311,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator Force(double val) { return new Force(val); }
         public static implicit operator Force(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_newton))
+            if (mq.Unit!.SameDimension(_newton))
             {
                 if (mq.Unit == _newton)
                 {
@@ -331,12 +331,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static Force operator +(Force q1, Force q2)
         {
-            return new Force(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Force(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static Force operator -(Force q1, Force q2)
         {
-            return new Force(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Force(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
@@ -355,7 +355,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator Pressure(double val) { return new Pressure(val); }
         public static implicit operator Pressure(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_pascal))
+            if (mq.Unit!.SameDimension(_pascal))
             {
                 if (mq.Unit == _pascal)
                 {
@@ -375,12 +375,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static Pressure operator +(Pressure q1, Pressure q2)
         {
-            return new Pressure(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Pressure(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static Pressure operator -(Pressure q1, Pressure q2)
         {
-            return new Pressure(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Pressure(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
@@ -399,7 +399,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator Density(double val) { return new Density(val); }
         public static implicit operator Density(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_densityUnit))
+            if (mq.Unit!.SameDimension(_densityUnit))
             {
                 return new Density(mq.Value, mq.Unit, mq.PrefixIndex);
             }
@@ -410,12 +410,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static Density operator +(Density q1, Density q2)
         {
-            return new Density(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Density(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static Density operator -(Density q1, Density q2)
         {
-            return new Density(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Density(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()

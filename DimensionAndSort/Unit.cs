@@ -116,6 +116,7 @@ namespace GreenOptimizer.DimensionAndSort
 
         private void RecomputeScale()
         {
+            if (_dimensions == null) return;
             double f = 1.0;
             for (int i = 0; i < 7; ++i)
             {
@@ -168,7 +169,7 @@ namespace GreenOptimizer.DimensionAndSort
 
         public static Unit operator *(Unit? q1, Unit? q2)
         {
-            Unit u = new Unit(q1._dimensions[(int)BaseUnitEnum.metre].Exponent + q2._dimensions[(int)BaseUnitEnum.metre].Exponent,
+            Unit u = new Unit(q1!._dimensions![(int)BaseUnitEnum.metre].Exponent + q2!._dimensions![(int)BaseUnitEnum.metre].Exponent,
                                 q1._dimensions[(int)BaseUnitEnum.kilogram].Exponent + q2._dimensions[(int)BaseUnitEnum.kilogram].Exponent,
                                 q1._dimensions[(int)BaseUnitEnum.second].Exponent + q2._dimensions[(int)BaseUnitEnum.second].Exponent,
                                 q1._dimensions[(int)BaseUnitEnum.ampere].Exponent + q2._dimensions[(int)BaseUnitEnum.ampere].Exponent,
@@ -184,7 +185,7 @@ namespace GreenOptimizer.DimensionAndSort
 
         public static Unit operator /(Unit? q1, Unit? q2)
         {
-            Unit u = new Unit(q1._dimensions[(int)BaseUnitEnum.metre].Exponent - q2._dimensions[(int)BaseUnitEnum.metre].Exponent,
+            Unit u = new Unit(q1!._dimensions![(int)BaseUnitEnum.metre].Exponent - q2!._dimensions![(int)BaseUnitEnum.metre].Exponent,
                                 q1._dimensions[(int)BaseUnitEnum.kilogram].Exponent - q2._dimensions[(int)BaseUnitEnum.kilogram].Exponent,
                                 q1._dimensions[(int)BaseUnitEnum.second].Exponent - q2._dimensions[(int)BaseUnitEnum.second].Exponent,
                                 q1._dimensions[(int)BaseUnitEnum.ampere].Exponent - q2._dimensions[(int)BaseUnitEnum.ampere].Exponent,
@@ -197,7 +198,7 @@ namespace GreenOptimizer.DimensionAndSort
 
         public static Unit operator +(Unit? q1, int n)
         {
-            return new Unit(q1._dimensions[(int)BaseUnitEnum.metre].Exponent * n,
+            return new Unit(q1!._dimensions![(int)BaseUnitEnum.metre].Exponent * n,
                                 q1._dimensions[(int)BaseUnitEnum.kilogram].Exponent * n,
                                 q1._dimensions[(int)BaseUnitEnum.second].Exponent * n,
                                 q1._dimensions[(int)BaseUnitEnum.ampere].Exponent * n,
@@ -208,26 +209,26 @@ namespace GreenOptimizer.DimensionAndSort
 
         public static bool operator ==(Unit? u1, Unit? u2)
         {
-            if ((object)u1 == null && (object)u2 == null) return true;
-            if ((object)u1 == null && (object)u2 != null) return false;
-            if ((object)u1 != null && (object)u2 == null) return false;
+            if (u1 is null && u2 is null) return true;
+            if (u1 is null && u2 is not null) return false;
+            if (u1 is not null && u2 is null) return false;
 
-            return u1.Equals(u2);
+            return u1!.Equals(u2);
         }
 
         public static bool operator !=(Unit? u1, Unit? u2)
         {
-            if ((object)u1 == null && (object)u2 == null)
+            if (u1 is null && u2 is null)
             {
                 return false;
             }
-            if ((object)u1 == null ^ (object)u2 == null)
+            if (u1 is null ^ u2 is null)
             {
                 return true;
             }
             else
             {
-                return !u1.Equals(u2);
+                return !u1!.Equals(u2);
             }
         }
 
@@ -265,7 +266,7 @@ namespace GreenOptimizer.DimensionAndSort
             }
 
             if (du == null) return du;
-            du.Scale = u.Scale;
+            du.Scale = u!.Scale;
             du.PrefixIndex = u._prefixIndex;
 
             return du;
@@ -287,12 +288,12 @@ namespace GreenOptimizer.DimensionAndSort
 
             public bool Equals(Unit? x, Unit? y)
             {
-                return x.Equals(y);
+                return x!.Equals(y);
             }
 
             public int GetHashCode(Unit obj)
             {
-                return obj._dimensions.Select(s => s.Exponent).Sum();
+                return obj._dimensions!.Select(s => s.Exponent).Sum();
             }
 
             #endregion
@@ -306,7 +307,7 @@ namespace GreenOptimizer.DimensionAndSort
             bool equals = true;
             for (int i = 0; i <= 6; ++i)
             {
-                if (_dimensions[i].Exponent != other._dimensions[i].Exponent)
+                if (_dimensions![i].Exponent != other._dimensions![i].Exponent)
                 {
                     equals = false;
                     break;
@@ -320,7 +321,7 @@ namespace GreenOptimizer.DimensionAndSort
             bool equals = true;
             for (int i = 0; i <= 6; ++i)
             {
-                if (!_dimensions[i].Scaling.Equals(other._dimensions[i].Scaling))
+                if (!_dimensions![i].Scaling.Equals(other._dimensions![i].Scaling))
                 {
                     equals = false;
                     break;
@@ -372,7 +373,7 @@ namespace GreenOptimizer.DimensionAndSort
 
         public virtual Unit? Clone()
         {
-            return new Unit(_dimensions[0].Exponent, _dimensions[1].Exponent, _dimensions[2].Exponent, _dimensions[3].Exponent, _dimensions[4].Exponent, _dimensions[5].Exponent, _dimensions[6].Exponent, _scale, _offset, _prefixIndex);
+            return new Unit(_dimensions![0].Exponent, _dimensions[1].Exponent, _dimensions[2].Exponent, _dimensions[3].Exponent, _dimensions[4].Exponent, _dimensions[5].Exponent, _dimensions[6].Exponent, _scale, _offset, _prefixIndex);
         }
 
         public override string ToString()

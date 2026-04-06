@@ -32,7 +32,8 @@ namespace DimensionAndSort
 
         public bool Equals(QuantityBase? other)
         {
-            bool ok1 = _unit.Equals(other?._unit);
+            if (other == null) return false;
+            bool ok1 = _unit?.Equals(other._unit) ?? other._unit == null;
           //  bool ok3 = _prefixIndex == other._prefixIndex;
             bool ok2 = Math.Abs(ValueInSIUnits - other.ValueInSIUnits) < 1e-9;
             return ok1 && ok2; //&& ok3;
@@ -85,13 +86,13 @@ namespace DimensionAndSort
 
         public double ToSIUnit(double value, Unit? unit, Unit.SI_PrefixEnum prefixIndex = Unit.SI_PrefixEnum.unity)
         {
-            return Unit.Prefixes[(int) prefixIndex].Factor * (_unit.Scale * value + _unit.Offset);
+            return Unit.Prefixes[(int) prefixIndex].Factor * (_unit!.Scale * value + _unit.Offset);
         }
 
         [JsonIgnore]
         public virtual double Value
         {
-            get { return (_valueInSIUnits/prefix.Factor - _unit.Offset)/_unit.Scale; }
+            get { return (_valueInSIUnits/prefix.Factor - _unit!.Offset)/_unit.Scale; }
            
         }
 
@@ -116,7 +117,7 @@ namespace DimensionAndSort
 
         public void SetUnit(Unit? newUnit)
         {
-            if (_unit.SameDimension(newUnit))
+            if (_unit!.SameDimension(newUnit))
             {
                 _unit = newUnit;
                 _prefixIndex = Unit.SI_PrefixEnum.unity;
@@ -129,7 +130,7 @@ namespace DimensionAndSort
 
         public bool TrySetUnit(Unit? newUnit)
         {
-            if (newUnit.SameDimension(_unit))
+            if (newUnit!.SameDimension(_unit))
             {
                 _unit = newUnit;
                 _prefixIndex = Unit.SI_PrefixEnum.unity;
@@ -145,7 +146,7 @@ namespace DimensionAndSort
         public Quantity ConvertToUnit(Unit? newUnit)
         {
             Quantity q;
-            if (newUnit.SameDimension(_unit))
+            if (newUnit!.SameDimension(_unit))
             {
                 double value = newUnit.FromSIUnit(ValueInSIUnits);
                 Unit? unit = newUnit;
@@ -181,9 +182,9 @@ namespace DimensionAndSort
 
         public static Quantity operator +(QuantityBase q1, QuantityBase q2)
         {
-            if (q1._unit.SameDimension(q2._unit))
+            if (q1._unit!.SameDimension(q2._unit))
             {
-                return new Quantity(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits), q1.Unit);
+                return new Quantity(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits), q1.Unit);
             }
             else
             {
@@ -193,9 +194,9 @@ namespace DimensionAndSort
 
         public static Quantity operator -(QuantityBase q1, QuantityBase q2)
         {
-            if (q1._unit.SameDimension(q2._unit))
+            if (q1._unit!.SameDimension(q2._unit))
             {
-                return new Quantity(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits), q1.Unit);
+                return new Quantity(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits), q1.Unit);
             }
             else
             {

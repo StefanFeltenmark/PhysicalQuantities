@@ -348,7 +348,7 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class Weber : Unit
     {
-        public Weber() : base(2, 1, -1, -1, 0, 0, 0) { }
+        public Weber() : base(2, 1, -2, -1, 0, 0, 0) { }
         public override string ToString() { return "Wb"; }
     }
 

@@ -12,7 +12,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator Current(double val) { return new Current(val); }
         public static implicit operator Current(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_ampere))
+            if (mq.Unit!.SameDimension(_ampere))
             {
                 if (mq.Unit == _ampere)
                 {
@@ -32,12 +32,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static Current operator +(Current q1, Current q2)
         {
-            return new Current(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Current(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static Current operator -(Current q1, Current q2)
         {
-            return new Current(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Current(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
@@ -56,7 +56,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator Voltage(double val) { return new Voltage(val); }
         public static implicit operator Voltage(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_volt))
+            if (mq.Unit!.SameDimension(_volt))
             {
                 if (mq.Unit == _volt)
                 {
@@ -76,12 +76,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static Voltage operator +(Voltage q1, Voltage q2)
         {
-            return new Voltage(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Voltage(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static Voltage operator -(Voltage q1, Voltage q2)
         {
-            return new Voltage(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Voltage(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
@@ -100,7 +100,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator Resistance(double val) { return new Resistance(val); }
         public static implicit operator Resistance(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_ohm))
+            if (mq.Unit!.SameDimension(_ohm))
             {
                 if (mq.Unit == _ohm)
                 {
@@ -120,12 +120,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static Resistance operator +(Resistance q1, Resistance q2)
         {
-            return new Resistance(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Resistance(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static Resistance operator -(Resistance q1, Resistance q2)
         {
-            return new Resistance(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Resistance(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
@@ -144,7 +144,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator Capacitance(double val) { return new Capacitance(val); }
         public static implicit operator Capacitance(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_farad))
+            if (mq.Unit!.SameDimension(_farad))
             {
                 if (mq.Unit == _farad)
                 {
@@ -164,12 +164,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static Capacitance operator +(Capacitance q1, Capacitance q2)
         {
-            return new Capacitance(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Capacitance(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static Capacitance operator -(Capacitance q1, Capacitance q2)
         {
-            return new Capacitance(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Capacitance(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
@@ -188,7 +188,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator MagneticFluxIntensity(double val) { return new MagneticFluxIntensity(val); }
         public static implicit operator MagneticFluxIntensity(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_siemens))
+            if (mq.Unit!.SameDimension(_siemens))
             {
                 if (mq.Unit == _siemens)
                 {
@@ -208,12 +208,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static MagneticFluxIntensity operator +(MagneticFluxIntensity q1, MagneticFluxIntensity q2)
         {
-            return new MagneticFluxIntensity(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new MagneticFluxIntensity(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static MagneticFluxIntensity operator -(MagneticFluxIntensity q1, MagneticFluxIntensity q2)
         {
-            return new MagneticFluxIntensity(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new MagneticFluxIntensity(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
@@ -232,7 +232,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator MagneticFluxDensity(double val) { return new MagneticFluxDensity(val); }
         public static implicit operator MagneticFluxDensity(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_tesla))
+            if (mq.Unit!.SameDimension(_tesla))
             {
                 if (mq.Unit == _tesla)
                 {
@@ -252,12 +252,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static MagneticFluxDensity operator +(MagneticFluxDensity q1, MagneticFluxDensity q2)
         {
-            return new MagneticFluxDensity(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new MagneticFluxDensity(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static MagneticFluxDensity operator -(MagneticFluxDensity q1, MagneticFluxDensity q2)
         {
-            return new MagneticFluxDensity(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new MagneticFluxDensity(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
@@ -276,7 +276,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator MagneticFlux(double val) { return new MagneticFlux(val); }
         public static implicit operator MagneticFlux(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_weber))
+            if (mq.Unit!.SameDimension(_weber))
             {
                 if (mq.Unit == _weber)
                 {
@@ -296,12 +296,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static MagneticFlux operator +(MagneticFlux q1, MagneticFlux q2)
         {
-            return new MagneticFlux(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new MagneticFlux(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static MagneticFlux operator -(MagneticFlux q1, MagneticFlux q2)
         {
-            return new MagneticFlux(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new MagneticFlux(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
@@ -320,7 +320,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator Inductance(double val) { return new Inductance(val); }
         public static implicit operator Inductance(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_henry))
+            if (mq.Unit!.SameDimension(_henry))
             {
                 if (mq.Unit == _henry)
                 {
@@ -340,12 +340,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static Inductance operator +(Inductance q1, Inductance q2)
         {
-            return new Inductance(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Inductance(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static Inductance operator -(Inductance q1, Inductance q2)
         {
-            return new Inductance(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Inductance(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()

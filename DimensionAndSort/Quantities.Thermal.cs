@@ -14,7 +14,7 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static implicit operator Temperature(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_kelvin))
+            if (mq.Unit!.SameDimension(_kelvin))
             {
                 if (mq.Unit == _kelvin)
                 {
@@ -34,12 +34,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static Temperature operator +(Temperature q1, Temperature q2)
         {
-            return new Temperature(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Temperature(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static Temperature operator -(Temperature q1, Temperature q2)
         {
-            return new Temperature(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Temperature(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()

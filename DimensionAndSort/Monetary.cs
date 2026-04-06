@@ -48,7 +48,7 @@ namespace GreenOptimizer.DimensionAndSort
             return clone;
         }
 
-        public static double ConversionRate(Currency? fromCurrency, Currency? toCurrency)
+        public static double ConversionRate(Currency fromCurrency, Currency toCurrency)
         {
             return fromCurrency.ExchangeRateToEur / toCurrency.ExchangeRateToEur;
         }
@@ -121,7 +121,7 @@ namespace GreenOptimizer.DimensionAndSort
 
         public static implicit operator MonetaryAmount(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_euro))
+            if (mq.Unit!.SameDimension(_euro))
             {
                 return new MonetaryAmount(mq.Value, mq.Unit, mq.PrefixIndex);
             }
@@ -130,13 +130,13 @@ namespace GreenOptimizer.DimensionAndSort
 
         public static MonetaryAmount operator +(MonetaryAmount q1, MonetaryAmount q2)
         {
-            return new MonetaryAmount(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor,
+            return new MonetaryAmount(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor,
                 q1.Unit, q1.PrefixIndex);
         }
 
         public static MonetaryAmount operator -(MonetaryAmount q1, MonetaryAmount q2)
         {
-            return new MonetaryAmount(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor,
+            return new MonetaryAmount(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor,
                 q1.Unit, q1.PrefixIndex);
         }
 
@@ -171,11 +171,11 @@ namespace GreenOptimizer.DimensionAndSort
         public UnitPrice ConvertToUnit(PriceUnit newunit)
         {
             UnitPrice p;
-            if (newunit.Unit.SameDimension(PriceUnit.Unit))
+            if (newunit.Unit!.SameDimension(PriceUnit.Unit))
             {
-                var factor1 = PriceUnit.Unit.FromSIUnit(1) / newunit.Unit.FromSIUnit(1);
+                var factor1 = PriceUnit.Unit!.FromSIUnit(1) / newunit.Unit.FromSIUnit(1);
 
-                var priceConversionRate = Currency.ConversionRate(PriceUnit.Currency, newunit.Currency);
+                var priceConversionRate = Currency.ConversionRate(PriceUnit.Currency!, newunit.Currency!);
 
                 var newValue = Price * ((decimal)priceConversionRate) * ((decimal)factor1);
 
@@ -202,7 +202,7 @@ namespace GreenOptimizer.DimensionAndSort
         public PriceUnit(Currency? currency, Unit? quantityUnit)
         {
             Currency = currency;
-            Unit = quantityUnit.Clone();
+            Unit = quantityUnit?.Clone();
         }
 
         public Currency? Currency { get; set; }
@@ -217,7 +217,7 @@ namespace GreenOptimizer.DimensionAndSort
 
         public object Clone()
         {
-            return new PriceUnit((Currency)Currency.Clone(), Unit.Clone());
+            return new PriceUnit((Currency)Currency!.Clone(), Unit!.Clone());
         }
     }
 }

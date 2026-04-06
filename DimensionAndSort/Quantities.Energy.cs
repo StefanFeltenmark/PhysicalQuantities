@@ -16,7 +16,7 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static implicit operator Energy(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_jouleUnit))
+            if (mq.Unit!.SameDimension(_jouleUnit))
             {
                 if (mq.Unit == _jouleUnit)
                 {
@@ -35,12 +35,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static Energy operator +(Energy q1, Energy q2)
         {
-            return new Energy(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Energy(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static Energy operator -(Energy q1, Energy q2)
         {
-            return new Energy(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Energy(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
@@ -60,7 +60,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator EnergyEquivalent(double val) { return new EnergyEquivalent(val); }
         public static implicit operator EnergyEquivalent(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_energyPerVolume))
+            if (mq.Unit!.SameDimension(_energyPerVolume))
             {
                 if (mq.Unit == _energyPerVolume)
                 {
@@ -79,17 +79,17 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static EnergyEquivalent operator +(EnergyEquivalent q1, EnergyEquivalent q2)
         {
-            return new EnergyEquivalent(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new EnergyEquivalent(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static EnergyEquivalent operator -(EnergyEquivalent q1, EnergyEquivalent q2)
         {
-            return new EnergyEquivalent(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new EnergyEquivalent(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static EnergyEquivalent operator -(EnergyEquivalent q1)
         {
-            return new EnergyEquivalent(q1.Unit.FromSIUnit(-q1.ValueInSIUnits), q1.Unit, q1.PrefixIndex);
+            return new EnergyEquivalent(q1.Unit!.FromSIUnit(-q1.ValueInSIUnits), q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
@@ -109,7 +109,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator HeatingValue(double val) { return new HeatingValue(val); }
         public static implicit operator HeatingValue(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_heatingValueUnit))
+            if (mq.Unit!.SameDimension(_heatingValueUnit))
             {
                 if (mq.Unit == _heatingValueUnit)
                 {
@@ -128,12 +128,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static HeatingValue operator +(HeatingValue q1, HeatingValue q2)
         {
-            return new HeatingValue(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new HeatingValue(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static HeatingValue operator -(HeatingValue q1, HeatingValue q2)
         {
-            return new HeatingValue(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new HeatingValue(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
@@ -158,7 +158,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator SpecificEnergy(double val) { return new SpecificEnergy(val); }
         public static implicit operator SpecificEnergy(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_specificEnergyUnit))
+            if (mq.Unit!.SameDimension(_specificEnergyUnit))
             {
                 if (mq.Unit == _specificEnergyUnit)
                 {
@@ -177,12 +177,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static SpecificEnergy operator +(SpecificEnergy q1, SpecificEnergy q2)
         {
-            return new SpecificEnergy(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new SpecificEnergy(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static SpecificEnergy operator -(SpecificEnergy q1, SpecificEnergy q2)
         {
-            return new SpecificEnergy(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new SpecificEnergy(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
@@ -202,7 +202,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator PowerRampRate(double val) { return new PowerRampRate(val); }
         public static implicit operator PowerRampRate(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_wattsPerSecond))
+            if (mq.Unit!.SameDimension(_wattsPerSecond))
             {
                 if (mq.Unit == _wattsPerSecond)
                 {
@@ -222,12 +222,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static PowerRampRate operator +(PowerRampRate q1, PowerRampRate q2)
         {
-            return new PowerRampRate(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new PowerRampRate(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static PowerRampRate operator -(PowerRampRate q1, PowerRampRate q2)
         {
-            return new PowerRampRate(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new PowerRampRate(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
@@ -251,7 +251,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator Power(double val) { return new Power(val); }
         public static implicit operator Power(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_watt))
+            if (mq.Unit!.SameDimension(_watt))
             {
                 if (mq.Unit == _watt)
                 {
@@ -271,12 +271,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static Power operator +(Power q1, Power q2)
         {
-            return new Power(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Power(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static Power operator -(Power q1, Power q2)
         {
-            return new Power(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Power(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()

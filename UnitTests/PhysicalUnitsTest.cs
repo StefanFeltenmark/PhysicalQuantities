@@ -491,14 +491,14 @@ namespace UnitTests
 
             var WaterValue = p / v;
 
-            string name = WaterValue.Unit.ToString();
+            string name = WaterValue.Unit!.ToString();
         }
 
         [Fact]
         public void TestCurrencyExchange()
         {
-            Currencies.NorwegianCrown.ExchangeRateToEur = 0.122098533;
-            Currencies.SwedishCrown.ExchangeRateToEur = 0.108485427;
+            Currencies.NorwegianCrown!.ExchangeRateToEur = 0.122098533;
+            Currencies.SwedishCrown!.ExchangeRateToEur = 0.108485427;
 
             var amount1 = new MonetaryAmount(100, Currencies.NorwegianCrown);
             var amount2 = new MonetaryAmount(100, Currencies.SwedishCrown);
@@ -610,7 +610,7 @@ namespace UnitTests
             
             Assert.True(Math.Abs(e1.Value - 1.0) < 1e-6);
 
-            Assert.True(e1.Unit.Equals(MWh));
+            Assert.True(e1.Unit!.Equals(MWh));
         }
 
         [Fact]
@@ -624,7 +624,7 @@ namespace UnitTests
 
             
 
-            Assert.True(P.Unit.Equals(Units.Watt));
+            Assert.True(P.Unit!.Equals(Units.Watt));
 
         }
 
@@ -850,6 +850,223 @@ namespace UnitTests
 
 
 
+
+        // ── Electrical quantities ──────────────────────────────────────────────
+
+        [Fact]
+        public void TestCapacitanceEnergyStored()
+        {
+            // E = ½ C V²
+            var C = new Capacitance(10, Unit.SI_PrefixEnum.mikro); // 10 µF
+            var V = new Voltage(100);                              // 100 V
+            Energy E = 0.5 * C * V * V;
+            Assert.True(Math.Abs(E.ValueInSIUnits - 0.05) < 1e-9);
+        }
+
+        [Fact]
+        public void TestCapacitanceAddition()
+        {
+            var c1 = new Capacitance(100, Unit.SI_PrefixEnum.mikro);
+            var c2 = new Capacitance(200, Unit.SI_PrefixEnum.mikro);
+            Capacitance c3 = c1 + c2;
+            Assert.True(Math.Abs(c3.ValueInSIUnits - 300e-6) < 1e-12);
+        }
+
+        [Fact]
+        public void TestInductanceEnergyStored()
+        {
+            // E = ½ L I²
+            var L = new Inductance(2, Unit.SI_PrefixEnum.milli); // 2 mH
+            var I = new Current(5);                              // 5 A
+            Energy E = 0.5 * L * I * I;
+            Assert.True(Math.Abs(E.ValueInSIUnits - 0.025) < 1e-9);
+        }
+
+        [Fact]
+        public void TestInductanceAddition()
+        {
+            var l1 = new Inductance(1);
+            var l2 = new Inductance(2);
+            Inductance l3 = l1 + l2;
+            Assert.True(Math.Abs(l3.ValueInSIUnits - 3.0) < 1e-9);
+        }
+
+        [Fact]
+        public void TestMagneticFluxFromDensityAndArea()
+        {
+            // Φ = B × A  (Weber = Tesla × m²)
+            var B = new MagneticFluxDensity(0.5); // 0.5 T
+            var A = new Area(2.0);                // 2 m²
+            var phi = B * A;
+            Assert.True(phi.Unit!.SameDimension(Units.Weber));
+            Assert.True(Math.Abs(phi.ValueInSIUnits - 1.0) < 1e-9);
+        }
+
+        [Fact]
+        public void TestMagneticFluxAddition()
+        {
+            var f1 = new MagneticFlux(0.3);
+            var f2 = new MagneticFlux(0.7);
+            MagneticFlux f3 = f1 + f2;
+            Assert.True(Math.Abs(f3.ValueInSIUnits - 1.0) < 1e-9);
+        }
+
+        [Fact]
+        public void TestMagneticFluxDensitySubtraction()
+        {
+            var b1 = new MagneticFluxDensity(1.5);
+            var b2 = new MagneticFluxDensity(0.5);
+            MagneticFluxDensity b3 = b1 - b2;
+            Assert.True(Math.Abs(b3.ValueInSIUnits - 1.0) < 1e-9);
+        }
+
+        [Fact]
+        public void TestVoltageSubtraction()
+        {
+            var v1 = new Voltage(230);
+            var v2 = new Voltage(12);
+            Voltage v3 = v1 - v2;
+            Assert.True(Math.Abs(v3.ValueInSIUnits - 218.0) < 1e-9);
+        }
+
+        [Fact]
+        public void TestCurrentSubtraction()
+        {
+            var i1 = new Current(10);
+            var i2 = new Current(3);
+            Current i3 = i1 - i2;
+            Assert.True(Math.Abs(i3.ValueInSIUnits - 7.0) < 1e-9);
+        }
+
+        [Fact]
+        public void TestResistanceAddition()
+        {
+            // Series resistors: R_total = R1 + R2
+            var r1 = new Resistance(100);
+            var r2 = new Resistance(220);
+            Resistance r3 = r1 + r2;
+            Assert.True(Math.Abs(r3.ValueInSIUnits - 320.0) < 1e-9);
+        }
+
+        // ── Chemical / luminous quantities ─────────────────────────────────────
+
+        [Fact]
+        public void TestAmountOfSubstanceAddition()
+        {
+            var n1 = new AmountOfSubstance(1.5);
+            var n2 = new AmountOfSubstance(2.5);
+            AmountOfSubstance n3 = n1 + n2;
+            Assert.True(Math.Abs(n3.ValueInSIUnits - 4.0) < 1e-9);
+        }
+
+        [Fact]
+        public void TestAmountOfSubstanceSubtraction()
+        {
+            var n1 = new AmountOfSubstance(5.0);
+            var n2 = new AmountOfSubstance(3.0);
+            AmountOfSubstance n3 = n1 - n2;
+            Assert.True(Math.Abs(n3.ValueInSIUnits - 2.0) < 1e-9);
+        }
+
+        [Fact]
+        public void TestLuminousIntensityAddition()
+        {
+            var c1 = new LuminousIntensity(100);
+            var c2 = new LuminousIntensity(50);
+            LuminousIntensity c3 = c1 + c2;
+            Assert.True(Math.Abs(c3.ValueInSIUnits - 150.0) < 1e-9);
+        }
+
+        [Fact]
+        public void TestCatalyticActivityAddition()
+        {
+            var k1 = new CatalyticActivity(2.0);
+            var k2 = new CatalyticActivity(3.0);
+            CatalyticActivity k3 = k1 + k2;
+            Assert.True(Math.Abs(k3.ValueInSIUnits - 5.0) < 1e-9);
+        }
+
+        // ── Comparison operators ───────────────────────────────────────────────
+
+        [Fact]
+        public void TestComparisonOperators()
+        {
+            var p1 = new Power(100);
+            var p2 = new Power(200);
+            Assert.True(p1 < p2);
+            Assert.True(p2 > p1);
+            Assert.True(p1 <= p2);
+            Assert.True(p2 >= p1);
+            Assert.False(p1 > p2);
+            Assert.False(p2 < p1);
+        }
+
+        [Fact]
+        public void TestComparisonEqualValues()
+        {
+            var e1 = new Energy(1, Unit.SI_PrefixEnum.kilo);
+            var e2 = new Energy(1000);
+            Assert.True(e1 <= e2);
+            Assert.True(e1 >= e2);
+        }
+
+        // ── Clone ──────────────────────────────────────────────────────────────
+
+        [Fact]
+        public void TestCloneIsEqualButDistinct()
+        {
+            var p = new Power(500, Unit.SI_PrefixEnum.kilo);
+            var clone = p.Clone();
+            Assert.True(p.Equals(clone));
+            Assert.False(ReferenceEquals(p, clone));
+        }
+
+        // ── ConvertToUnit ─────────────────────────────────────────────────────
+
+        [Fact]
+        public void TestConvertPressureUnit()
+        {
+            // 1 bar = 100 000 Pa  (kg·m⁻¹·s⁻²)
+            var bar = new Unit(-1, 1, -2, 0, 0, 0, 0, 1e5);
+            var p = new Pressure(1.5, bar);
+            Pressure pa = p.ConvertToUnit(Units.Pascal);
+            Assert.True(Math.Abs(pa.ValueInSIUnits - 1.5e5) < 1.0);
+        }
+
+        [Fact]
+        public void TestConvertMassFlowUnit()
+        {
+            // 1 tonne/h = 1000 kg / 3600 s ≈ 0.2778 kg/s
+            var tonnesPerHour = new Kilogram(Unit.SI_PrefixEnum.kilo) / new Hour();
+            var mf = new MassFlow(1.0, tonnesPerHour);
+            MassFlow kgPerSec = mf.ConvertToUnit(Units.KilogramPerSecond);
+            Assert.True(Math.Abs(kgPerSec.ValueInSIUnits - 1000.0 / 3600.0) < 1e-9);
+        }
+
+        // ── AdjustPrefix ──────────────────────────────────────────────────────
+
+        [Fact]
+        public void TestAdjustPrefix()
+        {
+            var p = new Power(1_500_000); // 1.5 MW stored as W
+            p.AdjustPrefix();
+            // Should select mega prefix so display value is close to 1
+            Assert.True(Math.Abs(p.Value - 1.5) < 0.01);
+            Assert.Equal(Unit.SI_PrefixEnum.mega, p.PrefixIndex);
+        }
+
+        // ── IncompatibleUnits for electrical types ─────────────────────────────
+
+        [Fact]
+        public void TestIncompatibleUnitsVoltageAndCurrent()
+        {
+            var v = new Voltage(230);
+            var i = new Current(10);
+            Assert.Throws<IncompatibleUnits>(() =>
+            {
+                Voltage bad = v + i;
+            });
+        }
 
         #region Additional test attributes
 

@@ -14,7 +14,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator Time(double val) { return new Time(val, _second); }
         public static implicit operator Time(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_second))
+            if (mq.Unit!.SameDimension(_second))
             {
                 return new Time(mq.Value, mq.Unit, mq.PrefixIndex);
             }
@@ -25,12 +25,12 @@ namespace GreenOptimizer.DimensionAndSort
         }
         public static Time operator +(Time q1, Time q2)
         {
-            return new Time(q1.Unit.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Time(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public static Time operator -(Time q1, Time q2)
         {
-            return new Time(q1.Unit.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+            return new Time(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
         public override QuantityBase Clone()
@@ -46,7 +46,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator DimensionlessQuantity(double val) { return new DimensionlessQuantity(val); }
         public static implicit operator DimensionlessQuantity(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_dimless))
+            if (mq.Unit!.SameDimension(_dimless))
             {
                 return new DimensionlessQuantity(mq.Value, mq.PrefixIndex);
             }
@@ -70,7 +70,7 @@ namespace GreenOptimizer.DimensionAndSort
         public static implicit operator Percentage(double val) { return new Percentage(val); }
         public static implicit operator Percentage(Quantity mq)
         {
-            if (mq.Unit.SameDimension(_perc))
+            if (mq.Unit!.SameDimension(_perc))
             {
                 return new Percentage(mq.Value);
             }
