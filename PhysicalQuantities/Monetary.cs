@@ -1,6 +1,6 @@
-﻿using DimensionAndSort;
+﻿using PhysicalQuantities;
 
-namespace GreenOptimizer.DimensionAndSort
+namespace PhysicalQuantities
 {
     public class Currencies
     {
@@ -93,16 +93,16 @@ namespace GreenOptimizer.DimensionAndSort
         }
     }
 
-    public class MonetaryAmount : QuantityBase
+    public class MonetaryAmount : QuantityBase, IComparable<MonetaryAmount>
     {
         protected static Currency? _euro = Currencies.Euro;
 
-        public MonetaryAmount(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity)
+        public MonetaryAmount(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity)
             : base(val, _euro, prefix)
         {
         }
 
-        public MonetaryAmount(double val, Unit? unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity)
+        public MonetaryAmount(double val, Unit? unit, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity)
             : base(val, unit, prefix)
         {
         }
@@ -139,6 +139,8 @@ namespace GreenOptimizer.DimensionAndSort
             return new MonetaryAmount(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor,
                 q1.Unit, q1.PrefixIndex);
         }
+
+        public int CompareTo(MonetaryAmount? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
 
         public override QuantityBase Clone()
         {

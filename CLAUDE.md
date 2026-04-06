@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 # Build the solution
-dotnet build DimensionAndSort.sln
+dotnet build PhysicalQuantities.sln
 
 # Run all tests (net8.0 and net48 simultaneously)
 dotnet test
@@ -24,7 +24,7 @@ dotnet test UnitTests/UnitTests.csproj --filter "FullyQualifiedName~PhysicalUnit
 
 ## Architecture
 
-This is a C# class library targeting **net8.0, net10.0, and net48** from a single SDK-style project (`DimensionAndSort/DimensionAndSort.csproj`). `<LangVersion>latest</LangVersion>` enables modern C# on all targets. `<Nullable>enable</Nullable>` is active — keep the build warning-free.
+This is a C# class library targeting **net8.0, net10.0, and net48** from a single SDK-style project (`PhysicalQuantities/PhysicalQuantities.csproj`). All code lives in the `PhysicalQuantities` namespace. `<LangVersion>latest</LangVersion>` enables modern C# on all targets. `<Nullable>enable</Nullable>` is active — keep the build warning-free.
 
 ### Core Design
 
@@ -36,11 +36,11 @@ All quantities store their internal value **in SI units** (`ValueInSIUnits`). Th
 
 | Project | Role |
 |---------|------|
-| `DimensionAndSort/` | Main library (net8.0 + net10.0 + net48) |
-| `DimensionAndSort.Protobuf/` | Optional protobuf-net serialization helpers |
+| `PhysicalQuantities/` | Main library (net8.0 + net10.0 + net48) |
+| `PhysicalQuantities.Protobuf/` | Optional protobuf-net serialization helpers |
 | `UnitTests/` | xUnit tests (net8.0 + net48) |
 
-### Key Files in `DimensionAndSort/`
+### Key Files in `PhysicalQuantities/`
 
 | File | Role |
 |------|------|

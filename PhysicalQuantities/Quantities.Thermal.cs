@@ -1,13 +1,13 @@
-using DimensionAndSort;
+using PhysicalQuantities;
 
-namespace GreenOptimizer.DimensionAndSort
+namespace PhysicalQuantities
 {
-    public class Temperature : QuantityBase
+    public class Temperature : QuantityBase, IComparable<Temperature>
     {
         protected static Kelvin? _kelvin = Units.Kelvin;
         public Temperature(double val) : base(val, _kelvin) { }
-        public Temperature(double val, Unit? unit) : base(val, unit) { }
-        public Temperature(double val, Unit? unit, Unit.SI_PrefixEnum prefix) : base(val, unit, prefix) { }
+        public Temperature(double val, Unit.SI_Prefix prefix) : base(val, _kelvin, prefix) { }
+        public Temperature(double val, Unit? unit, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, unit, prefix) { }
         public static implicit operator Temperature(double val)
         {
             return new Temperature(val);
@@ -41,6 +41,8 @@ namespace GreenOptimizer.DimensionAndSort
         {
             return new Temperature(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
+
+        public int CompareTo(Temperature? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
 
         public override QuantityBase Clone()
         {

@@ -1,4 +1,4 @@
-namespace GreenOptimizer.DimensionAndSort
+namespace PhysicalQuantities
 {
     public partial class Unit
     {
@@ -6,7 +6,7 @@ namespace GreenOptimizer.DimensionAndSort
         {
             #region fields
             private int _exponent;
-            private SI_PrefixEnum _SI_prefix;
+            private SI_Prefix _SI_prefix;
             private Scaling _scaling;
             #endregion
 
@@ -22,7 +22,7 @@ namespace GreenOptimizer.DimensionAndSort
                 set { _scaling = value; }
             }
 
-            public SI_PrefixEnum SI_prefix
+            public SI_Prefix SI_prefix
             {
                 get { return _SI_prefix; }
                 set { _SI_prefix = value; }
@@ -42,7 +42,7 @@ namespace GreenOptimizer.DimensionAndSort
                 u._scaling = _scaling;
             }
 
-            public DimensionUnit(int exponent, Scaling scale, SI_PrefixEnum prefix)
+            public DimensionUnit(int exponent, Scaling scale, SI_Prefix prefix)
             {
                 _exponent = exponent;
                 _SI_prefix = prefix;
@@ -52,7 +52,7 @@ namespace GreenOptimizer.DimensionAndSort
             public DimensionUnit()
             {
                 _exponent = 0;
-                _SI_prefix = SI_PrefixEnum.unity;
+                _SI_prefix = SI_Prefix.unity;
                 _scaling = new Scaling();
             }
 

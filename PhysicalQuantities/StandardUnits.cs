@@ -1,4 +1,4 @@
-namespace GreenOptimizer.DimensionAndSort
+namespace PhysicalQuantities
 {
     public class Units
     {
@@ -6,18 +6,20 @@ namespace GreenOptimizer.DimensionAndSort
 
         static Units()
         {
-            UnitList = new List<Unit?>()
-            {
-                Metre, Kilogram, Second, Ampere, Kelvin, Joule
-            };
+            UnitList = typeof(Units)
+                .GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static)
+                .Where(f => typeof(Unit).IsAssignableFrom(f.FieldType))
+                .Select(f => f.GetValue(null) as Unit)
+                .Where(u => u != null)
+                .ToList();
         }
 
         public static class Lengths
         {
             public static readonly Metre Metre = new();
             public static readonly Centimetre? Centimetre = new();
-            public static readonly Unit? Millimetre = new Metre(){ PrefixIndex = Unit.SI_PrefixEnum.milli, Scale = 1e-3};
-            public static readonly Unit? Kilometre = new Metre() { PrefixIndex = Unit.SI_PrefixEnum.kilo, Scale = 1e3 };
+            public static readonly Unit? Millimetre = new Metre(){ PrefixIndex = Unit.SI_Prefix.milli, Scale = 1e-3};
+            public static readonly Unit? Kilometre = new Metre() { PrefixIndex = Unit.SI_Prefix.kilo, Scale = 1e3 };
         }
 
         public static readonly Metre? Metre = new();
@@ -60,9 +62,11 @@ namespace GreenOptimizer.DimensionAndSort
         public static BTU BTU = new BTU();
         public static WattHour? WattHour = new WattHour();
         public static MegaWattHour? MegaWattHour = new MegaWattHour();
+        public static KiloWattHour? KiloWattHour = new KiloWattHour();
         public static Percent? Percent = new Percent();
         public static Hertz? Hertz = new Hertz();
         public static Coulomb? Coulomb = new Coulomb();
+        public static AmperePerMetre? AmperePerMetre = new AmperePerMetre();
     }
 
     public abstract class TimeUnit : Unit
@@ -262,7 +266,7 @@ namespace GreenOptimizer.DimensionAndSort
     #region WeightUnits
     public class Kilogram : Unit
     {
-        public Kilogram(SI_PrefixEnum prefixIndex = SI_PrefixEnum.unity) : base(0, 1, 0, 0, 0, 0, 0)
+        public Kilogram(SI_Prefix prefixIndex = SI_Prefix.unity) : base(0, 1, 0, 0, 0, 0, 0)
         {
             _prefixIndex = prefixIndex;
             _scale *= Prefix.Factor;
@@ -360,6 +364,12 @@ namespace GreenOptimizer.DimensionAndSort
         public override string ToString() { return "T"; }
     }
 
+    public class AmperePerMetre : Unit
+    {
+        public AmperePerMetre() : base(-1, 0, 0, 1, 0, 0, 0) { }
+        public override string ToString() { return "A/m"; }
+    }
+
     public class Henry : Unit
     {
         public Henry() : base(2, 1, -2, -2, 0, 0, 0) { }
@@ -438,7 +448,7 @@ namespace GreenOptimizer.DimensionAndSort
     #region EnergyUnits
     public class Joule : Unit
     {
-        public Joule(SI_PrefixEnum prefixIndex = SI_PrefixEnum.unity) : base(2, 1, -2, 0, 0, 0, 0)
+        public Joule(SI_Prefix prefixIndex = SI_Prefix.unity) : base(2, 1, -2, 0, 0, 0, 0)
         {
             _prefixIndex = prefixIndex;
             _scale *= Prefix.Factor;
@@ -453,7 +463,7 @@ namespace GreenOptimizer.DimensionAndSort
     
     public class WattHour : Unit
     {
-        public WattHour(SI_PrefixEnum prefixIndex = SI_PrefixEnum.unity) : base(2, 1, -2, 0, 0, 0, 0)
+        public WattHour(SI_Prefix prefixIndex = SI_Prefix.unity) : base(2, 1, -2, 0, 0, 0, 0)
         {
             Scale = 3600.0;
             _prefixIndex = prefixIndex;
@@ -474,7 +484,7 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class BTU : Unit
     {
-        public BTU(SI_PrefixEnum prefixIndex = SI_PrefixEnum.unity)
+        public BTU(SI_Prefix prefixIndex = SI_Prefix.unity)
             : base(2, 1, -2, 0, 0, 0, 0)
         {
             Scale = 1055.05585;
@@ -505,7 +515,7 @@ namespace GreenOptimizer.DimensionAndSort
     #region PowerUnits
     public class Watt : Unit
     {
-        public Watt(SI_PrefixEnum prefixIndex = SI_PrefixEnum.unity) : base(2, 1, -3, 0, 0, 0, 0)
+        public Watt(SI_Prefix prefixIndex = SI_Prefix.unity) : base(2, 1, -3, 0, 0, 0, 0)
         {
             _prefixIndex = prefixIndex;
             _scale *= Prefix.Factor;
@@ -531,11 +541,20 @@ namespace GreenOptimizer.DimensionAndSort
 
     public class MegaWattHour : Joule
     {
-        public MegaWattHour() 
+        public MegaWattHour()
         {
             Scale = 3600*1e6;
         }
         public override string ToString() { return "MWh"; }
+    }
+
+    public class KiloWattHour : Joule
+    {
+        public KiloWattHour()
+        {
+            Scale = 3600 * 1e3;
+        }
+        public override string ToString() { return "kWh"; }
     }
 
     public class HorsePower : Watt

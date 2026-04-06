@@ -1,4 +1,4 @@
-﻿namespace GreenOptimizer.DimensionAndSort
+﻿namespace PhysicalQuantities
 {
     public class Exceptions
     {

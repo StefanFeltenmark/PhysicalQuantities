@@ -1,14 +1,14 @@
-using DimensionAndSort;
+using PhysicalQuantities;
 
-namespace GreenOptimizer.DimensionAndSort
+namespace PhysicalQuantities
 {
-    public class LuminousIntensity : QuantityBase
+    public class LuminousIntensity : QuantityBase, IComparable<LuminousIntensity>
     {
         static Unit? _candela = Units.Candela;
         public LuminousIntensity(LuminousIntensity p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public LuminousIntensity(double val) : base(val, _candela) { }
-        public LuminousIntensity(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _candela, prefix) { }
-        public LuminousIntensity(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public LuminousIntensity(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _candela, prefix) { }
+        public LuminousIntensity(double val, Unit? u, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
         public static implicit operator LuminousIntensity(double val) { return new LuminousIntensity(val); }
         public static implicit operator LuminousIntensity(Quantity mq)
         {
@@ -40,19 +40,21 @@ namespace GreenOptimizer.DimensionAndSort
             return new LuminousIntensity(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(LuminousIntensity? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new LuminousIntensity(this);
         }
     }
 
-    public class CatalyticActivity : QuantityBase
+    public class CatalyticActivity : QuantityBase, IComparable<CatalyticActivity>
     {
         static Unit? _katal = Units.Katal;
         public CatalyticActivity(CatalyticActivity p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public CatalyticActivity(double val) : base(val, _katal) { }
-        public CatalyticActivity(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _katal, prefix) { }
-        public CatalyticActivity(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public CatalyticActivity(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _katal, prefix) { }
+        public CatalyticActivity(double val, Unit? u, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
         public static implicit operator CatalyticActivity(double val) { return new CatalyticActivity(val); }
         public static implicit operator CatalyticActivity(Quantity mq)
         {
@@ -84,19 +86,21 @@ namespace GreenOptimizer.DimensionAndSort
             return new CatalyticActivity(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(CatalyticActivity? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new CatalyticActivity(this);
         }
     }
 
-    public class AmountOfSubstance : QuantityBase
+    public class AmountOfSubstance : QuantityBase, IComparable<AmountOfSubstance>
     {
         static Unit? _mole = Units.Mole;
         public AmountOfSubstance(AmountOfSubstance p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public AmountOfSubstance(double val) : base(val, _mole) { }
-        public AmountOfSubstance(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _mole, prefix) { }
-        public AmountOfSubstance(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public AmountOfSubstance(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _mole, prefix) { }
+        public AmountOfSubstance(double val, Unit? u, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
         public static implicit operator AmountOfSubstance(double val) { return new AmountOfSubstance(val); }
         public static implicit operator AmountOfSubstance(Quantity mq)
         {
@@ -127,6 +131,8 @@ namespace GreenOptimizer.DimensionAndSort
         {
             return new AmountOfSubstance(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
+
+        public int CompareTo(AmountOfSubstance? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
 
         public override QuantityBase Clone()
         {

@@ -6,11 +6,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Title>Dimension and Sort</Title>
+    <Title>Physical Quantities</Title>
     <Authors>Stefan Feltenmark</Authors>
-    <Description>C# class library for representing quantities (force, energy, lenght) and their units (m, s, W, J).</Description>
+    <Description>C# class library for representing physical quantities (force, energy, length) and their units (m, s, W, J) with type-safe dimensional analysis.</Description>
     <PackageReleaseNotes></PackageReleaseNotes>
-    <PackageId>DimensionAndSort</PackageId>
+    <PackageId>PhysicalQuantities</PackageId>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENCE.txt</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>

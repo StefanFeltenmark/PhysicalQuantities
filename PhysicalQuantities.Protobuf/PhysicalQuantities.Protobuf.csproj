@@ -5,8 +5,8 @@
     <LangVersion>latest</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <AssemblyName>DimensionAndSort.Protobuf</AssemblyName>
-    <RootNamespace>GreenOptimizer.DimensionAndSort</RootNamespace>
+    <AssemblyName>PhysicalQuantities.Protobuf</AssemblyName>
+    <RootNamespace>PhysicalQuantities</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DimensionAndSort\DimensionAndSort.csproj" />
+    <ProjectReference Include="..\PhysicalQuantities\PhysicalQuantities.csproj" />
   </ItemGroup>
 
 </Project>

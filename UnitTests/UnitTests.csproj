@@ -23,8 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DimensionAndSort\DimensionAndSort.csproj" />
-    <ProjectReference Include="..\DimensionAndSort.Protobuf\DimensionAndSort.Protobuf.csproj" />
+    <ProjectReference Include="..\PhysicalQuantities\PhysicalQuantities.csproj" />
+    <ProjectReference Include="..\PhysicalQuantities.Protobuf\PhysicalQuantities.Protobuf.csproj" />
   </ItemGroup>
 
 </Project>

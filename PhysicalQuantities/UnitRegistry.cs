@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace GreenOptimizer.DimensionAndSort
+namespace PhysicalQuantities
 {
     /// <summary>
     /// Maps well-known unit names (matching the field names on <see cref="Units"/>) to their

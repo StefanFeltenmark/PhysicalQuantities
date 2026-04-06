@@ -1,11 +1,11 @@
-using DimensionAndSort;
+using PhysicalQuantities;
 
-namespace GreenOptimizer.DimensionAndSort
+namespace PhysicalQuantities
 {
-    public class Length : QuantityBase
+    public class Length : QuantityBase, IComparable<Length>
     {
-        public Length(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, Units.Metre, prefix) { }
-        public Length(double val, Unit? unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, unit, prefix) { }
+        public Length(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, Units.Metre, prefix) { }
+        public Length(double val, Unit? unit, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, unit, prefix) { }
         public Length()
         {
 
@@ -37,19 +37,21 @@ namespace GreenOptimizer.DimensionAndSort
             return new Length(-q1.Value, q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(Length? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new Length(Value, _unit, _prefixIndex);
         }
     }
 
-    public class Mass : QuantityBase
+    public class Mass : QuantityBase, IComparable<Mass>
     {
         protected static Kilogram? _kilo = Units.Kilogram;
 
         public Mass(double val) : base(val, _kilo) { }
-        public Mass(double val, Unit? unit) : base(val, unit) { }
-        public Mass(double val, Unit? unit, Unit.SI_PrefixEnum prefix) : base(val, unit, prefix) { }
+        public Mass(double val, Unit.SI_Prefix prefix) : base(val, _kilo, prefix) { }
+        public Mass(double val, Unit? unit, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, unit, prefix) { }
 
         public Mass()
         {
@@ -78,20 +80,22 @@ namespace GreenOptimizer.DimensionAndSort
             return new Mass(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(Mass? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new Mass(Value, _unit, _prefixIndex);
         }
     }
 
-    public class Area : QuantityBase
+    public class Area : QuantityBase, IComparable<Area>
     {
         protected static SquareMetre? _squareMetreUnit = new SquareMetre();
 
-        public Area(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, new SquareMetre(), prefix) { }
-        public Area(double val, Unit? unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, unit, prefix) { }
+        public Area(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, new SquareMetre(), prefix) { }
+        public Area(double val, Unit? unit, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, unit, prefix) { }
 
-        public Area() : base(0, new SquareMetre(), Unit.SI_PrefixEnum.unity)
+        public Area() : base(0, new SquareMetre(), Unit.SI_Prefix.unity)
         {
 
         }
@@ -118,17 +122,19 @@ namespace GreenOptimizer.DimensionAndSort
             return new Area(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(Area? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new Area(Value, _unit, _prefixIndex);
         }
     }
 
-    public class Volume : QuantityBase
+    public class Volume : QuantityBase, IComparable<Volume>
     {
         private static QubicMetre? _qubicMetreUnit = Units.QubicMetre;
-        public Volume(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _qubicMetreUnit, prefix) { }
-        public Volume(double val, Unit? unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, unit, prefix) { }
+        public Volume(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _qubicMetreUnit, prefix) { }
+        public Volume(double val, Unit? unit, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, unit, prefix) { }
 
         public Volume()
         {
@@ -156,18 +162,20 @@ namespace GreenOptimizer.DimensionAndSort
             return new Volume(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits), q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(Volume? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new Volume(Value, _unit, _prefixIndex);
         }
     }
 
-    public class VolumeFlow : QuantityBase
+    public class VolumeFlow : QuantityBase, IComparable<VolumeFlow>
     {
         private QubicMetrePerSecond _qubicMetrePerSecondUnit = new QubicMetrePerSecond();
 
-        public VolumeFlow(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, new QubicMetrePerSecond(), prefix) { }
-        public VolumeFlow(double val, Unit? unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, unit, prefix) { }
+        public VolumeFlow(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, new QubicMetrePerSecond(), prefix) { }
+        public VolumeFlow(double val, Unit? unit, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, unit, prefix) { }
 
         public VolumeFlow()
         {
@@ -195,17 +203,19 @@ namespace GreenOptimizer.DimensionAndSort
             return new VolumeFlow(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(VolumeFlow? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new VolumeFlow(Value, _unit, _prefixIndex);
         }
     }
 
-    public class MassFlow : QuantityBase
+    public class MassFlow : QuantityBase, IComparable<MassFlow>
     {
         protected static KilogramPerSecond? _kilogramPerSecondUnit = Units.KilogramPerSecond;
-        public MassFlow(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _kilogramPerSecondUnit, prefix) { }
-        public MassFlow(double val, Unit? unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, unit, prefix) { }
+        public MassFlow(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _kilogramPerSecondUnit, prefix) { }
+        public MassFlow(double val, Unit? unit, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, unit, prefix) { }
         public static implicit operator MassFlow(double val) { return new MassFlow(val); }
         public static implicit operator MassFlow(Quantity mq)
         {
@@ -228,18 +238,20 @@ namespace GreenOptimizer.DimensionAndSort
             return new MassFlow(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(MassFlow? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new MassFlow(Value, _unit, _prefixIndex);
         }
     }
 
-    public class Speed : QuantityBase
+    public class Speed : QuantityBase, IComparable<Speed>
     {
         private static Unit? _metrePerSecond = new Unit(1, 0, -1, 0, 0, 0, 0);
         public Speed(double val) : base(val, _metrePerSecond) { }
-        public Speed(double val, Unit? unit) : base(val, unit) { }
-        public Speed(double val, Unit? unit, Unit.SI_PrefixEnum prefix) : base(val, unit, prefix) { }
+        public Speed(double val, Unit.SI_Prefix prefix) : base(val, _metrePerSecond, prefix) { }
+        public Speed(double val, Unit? unit, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, unit, prefix) { }
         public static implicit operator Speed(double val) { return new Speed(val); }
         public static implicit operator Speed(Quantity mq)
         {
@@ -262,18 +274,20 @@ namespace GreenOptimizer.DimensionAndSort
             return new Speed(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(Speed? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new Speed(Value, _unit, _prefixIndex);
         }
     }
 
-    public class Acceleration : QuantityBase
+    public class Acceleration : QuantityBase, IComparable<Acceleration>
     {
         private static Unit? _metrePerSecond2 = new Unit(1, 0, -2, 0, 0, 0, 0);
         public Acceleration(double val) : base(val, _metrePerSecond2) { }
-        public Acceleration(double val, Unit? unit) : base(val, unit) { }
-        public Acceleration(double val, Unit? unit, Unit.SI_PrefixEnum prefix) : base(val, unit, prefix) { }
+        public Acceleration(double val, Unit.SI_Prefix prefix) : base(val, _metrePerSecond2, prefix) { }
+        public Acceleration(double val, Unit? unit, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, unit, prefix) { }
         public static implicit operator Acceleration(double val) { return new Acceleration(val); }
         public static implicit operator Acceleration(Quantity mq)
         {
@@ -296,18 +310,20 @@ namespace GreenOptimizer.DimensionAndSort
             return new Acceleration(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(Acceleration? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new Acceleration(Value, _unit, _prefixIndex);
         }
     }
 
-    public class Force : QuantityBase
+    public class Force : QuantityBase, IComparable<Force>
     {
         static Newton? _newton = Units.Newton;
         public Force(double val) : base(val, _newton) { }
-        public Force(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _newton, prefix) { }
-        public Force(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public Force(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _newton, prefix) { }
+        public Force(double val, Unit? u, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
         public static implicit operator Force(double val) { return new Force(val); }
         public static implicit operator Force(Quantity mq)
         {
@@ -339,19 +355,21 @@ namespace GreenOptimizer.DimensionAndSort
             return new Force(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(Force? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new Force(Value, _unit, _prefixIndex);
         }
     }
 
-    public class Pressure : QuantityBase
+    public class Pressure : QuantityBase, IComparable<Pressure>
     {
         static Pascal? _pascal = Units.Pascal;
         public Pressure(Pressure p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public Pressure(double val) : base(val, _pascal) { }
-        public Pressure(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _pascal, prefix) { }
-        public Pressure(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public Pressure(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _pascal, prefix) { }
+        public Pressure(double val, Unit? u, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
         public static implicit operator Pressure(double val) { return new Pressure(val); }
         public static implicit operator Pressure(Quantity mq)
         {
@@ -383,19 +401,21 @@ namespace GreenOptimizer.DimensionAndSort
             return new Pressure(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(Pressure? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new Pressure(Value, _unit, _prefixIndex);
         }
     }
 
-    public class Density : QuantityBase
+    public class Density : QuantityBase, IComparable<Density>
     {
         static Unit? _densityUnit = new Unit(-3, 1, 0, 0, 0, 0, 0);
         public Density(Density p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public Density(double val) : base(val, _densityUnit) { }
-        public Density(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _densityUnit, prefix) { }
-        public Density(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public Density(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _densityUnit, prefix) { }
+        public Density(double val, Unit? u, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
         public static implicit operator Density(double val) { return new Density(val); }
         public static implicit operator Density(Quantity mq)
         {
@@ -417,6 +437,8 @@ namespace GreenOptimizer.DimensionAndSort
         {
             return new Density(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
+
+        public int CompareTo(Density? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
 
         public override QuantityBase Clone()
         {

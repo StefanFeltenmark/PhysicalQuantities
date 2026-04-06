@@ -1,13 +1,13 @@
-using DimensionAndSort;
+using PhysicalQuantities;
 
-namespace GreenOptimizer.DimensionAndSort
+namespace PhysicalQuantities
 {
-    public class Energy : QuantityBase
+    public class Energy : QuantityBase, IComparable<Energy>
     {
         private static Joule? _jouleUnit = new Joule();
         public Energy(Energy e) : base(e.Value, e.Unit, e.PrefixIndex) { }
-        public Energy(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _jouleUnit, prefix) { }
-        public Energy(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public Energy(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _jouleUnit, prefix) { }
+        public Energy(double val, Unit? u, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
         public static implicit operator Energy(double val) { return new Energy(val); }
 
         public Energy()
@@ -43,20 +43,22 @@ namespace GreenOptimizer.DimensionAndSort
             return new Energy(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(Energy? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new Energy(Value, _unit, _prefixIndex);
         }
     }
 
-    public class EnergyEquivalent : QuantityBase
+    public class EnergyEquivalent : QuantityBase, IComparable<EnergyEquivalent>
     {
         private static Unit? _energyPerVolume = new Joule() / new QubicMetre();
 
         public EnergyEquivalent(EnergyEquivalent e) : base(e.Value, e.Unit, e.PrefixIndex) { }
         public EnergyEquivalent() { }
-        public EnergyEquivalent(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _energyPerVolume, prefix) { }
-        public EnergyEquivalent(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public EnergyEquivalent(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _energyPerVolume, prefix) { }
+        public EnergyEquivalent(double val, Unit? u, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
         public static implicit operator EnergyEquivalent(double val) { return new EnergyEquivalent(val); }
         public static implicit operator EnergyEquivalent(Quantity mq)
         {
@@ -92,20 +94,22 @@ namespace GreenOptimizer.DimensionAndSort
             return new EnergyEquivalent(q1.Unit!.FromSIUnit(-q1.ValueInSIUnits), q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(EnergyEquivalent? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new EnergyEquivalent(Value, _unit, _prefixIndex);
         }
     }
 
-    public class HeatingValue : QuantityBase
+    public class HeatingValue : QuantityBase, IComparable<HeatingValue>
     {
-        private static Joule _energyUnit = new Joule(Unit.SI_PrefixEnum.kilo);
+        private static Joule _energyUnit = new Joule(Unit.SI_Prefix.kilo);
         private static Kilogram _weightUnit = new Kilogram();
         private static Unit? _heatingValueUnit = _energyUnit / _weightUnit;
         public HeatingValue(HeatingValue e) : base(e.Value, e.Unit, e.PrefixIndex) { }
-        public HeatingValue(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _heatingValueUnit, prefix) { }
-        public HeatingValue(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public HeatingValue(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _heatingValueUnit, prefix) { }
+        public HeatingValue(double val, Unit? u, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
         public static implicit operator HeatingValue(double val) { return new HeatingValue(val); }
         public static implicit operator HeatingValue(Quantity mq)
         {
@@ -136,13 +140,15 @@ namespace GreenOptimizer.DimensionAndSort
             return new HeatingValue(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(HeatingValue? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new HeatingValue(Value, _unit, _prefixIndex);
         }
     }
 
-    public class SpecificEnergy : QuantityBase
+    public class SpecificEnergy : QuantityBase, IComparable<SpecificEnergy>
     {
         private static Joule _energyUnit = new Joule();
         private static Kilogram _weightUnit = new Kilogram();
@@ -153,8 +159,8 @@ namespace GreenOptimizer.DimensionAndSort
 
         }
         public SpecificEnergy(SpecificEnergy e) : base(e.Value, e.Unit, e.PrefixIndex) { }
-        public SpecificEnergy(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _specificEnergyUnit, prefix) { }
-        public SpecificEnergy(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public SpecificEnergy(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _specificEnergyUnit, prefix) { }
+        public SpecificEnergy(double val, Unit? u, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
         public static implicit operator SpecificEnergy(double val) { return new SpecificEnergy(val); }
         public static implicit operator SpecificEnergy(Quantity mq)
         {
@@ -185,20 +191,22 @@ namespace GreenOptimizer.DimensionAndSort
             return new SpecificEnergy(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(SpecificEnergy? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new SpecificEnergy(Value, _unit, _prefixIndex);
         }
     }
 
-    public class PowerRampRate : QuantityBase
+    public class PowerRampRate : QuantityBase, IComparable<PowerRampRate>
     {
         static Unit? _wattsPerSecond = Units.Watt / Units.Second;
 
         public PowerRampRate(PowerRampRate p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public PowerRampRate(double val) : base(val, _wattsPerSecond) { }
-        public PowerRampRate(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _wattsPerSecond, prefix) { }
-        public PowerRampRate(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public PowerRampRate(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _wattsPerSecond, prefix) { }
+        public PowerRampRate(double val, Unit? u, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
         public static implicit operator PowerRampRate(double val) { return new PowerRampRate(val); }
         public static implicit operator PowerRampRate(Quantity mq)
         {
@@ -230,19 +238,21 @@ namespace GreenOptimizer.DimensionAndSort
             return new PowerRampRate(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(PowerRampRate? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new PowerRampRate(this);
         }
     }
 
-    public class Power : QuantityBase
+    public class Power : QuantityBase, IComparable<Power>
     {
         static Watt? _watt = new Watt();
         public Power(Power p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public Power(double val = 0.0) : base(val, _watt) { }
-        public Power(double val = 0.0, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _watt, prefix) { }
-        public Power(double val = 0.0, Unit? u = null, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public Power(double val = 0.0, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _watt, prefix) { }
+        public Power(double val = 0.0, Unit? u = null, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
 
         public Power()
         {
@@ -278,6 +288,8 @@ namespace GreenOptimizer.DimensionAndSort
         {
             return new Power(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
+
+        public int CompareTo(Power? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
 
         public override QuantityBase Clone()
         {

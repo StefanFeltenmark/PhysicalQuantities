@@ -1,14 +1,14 @@
-using DimensionAndSort;
+using PhysicalQuantities;
 
-namespace GreenOptimizer.DimensionAndSort
+namespace PhysicalQuantities
 {
-    public class Current : QuantityBase
+    public class Current : QuantityBase, IComparable<Current>
     {
         static Unit? _ampere = Units.Ampere;
         public Current(Current p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public Current(double val) : base(val, _ampere) { }
-        public Current(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _ampere, prefix) { }
-        public Current(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public Current(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _ampere, prefix) { }
+        public Current(double val, Unit? u, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
         public static implicit operator Current(double val) { return new Current(val); }
         public static implicit operator Current(Quantity mq)
         {
@@ -40,19 +40,21 @@ namespace GreenOptimizer.DimensionAndSort
             return new Current(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(Current? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new Current(this);
         }
     }
 
-    public class Voltage : QuantityBase
+    public class Voltage : QuantityBase, IComparable<Voltage>
     {
         static Unit? _volt = Units.Volt;
         public Voltage(Voltage p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public Voltage(double val) : base(val, _volt) { }
-        public Voltage(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _volt, prefix) { }
-        public Voltage(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public Voltage(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _volt, prefix) { }
+        public Voltage(double val, Unit? u, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
         public static implicit operator Voltage(double val) { return new Voltage(val); }
         public static implicit operator Voltage(Quantity mq)
         {
@@ -84,19 +86,21 @@ namespace GreenOptimizer.DimensionAndSort
             return new Voltage(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(Voltage? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new Voltage(this);
         }
     }
 
-    public class Resistance : QuantityBase
+    public class Resistance : QuantityBase, IComparable<Resistance>
     {
         static Unit? _ohm = Units.Ohm;
         public Resistance(Resistance p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public Resistance(double val) : base(val, _ohm) { }
-        public Resistance(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _ohm, prefix) { }
-        public Resistance(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public Resistance(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _ohm, prefix) { }
+        public Resistance(double val, Unit? u, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
         public static implicit operator Resistance(double val) { return new Resistance(val); }
         public static implicit operator Resistance(Quantity mq)
         {
@@ -128,19 +132,21 @@ namespace GreenOptimizer.DimensionAndSort
             return new Resistance(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(Resistance? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new Resistance(this);
         }
     }
 
-    public class Capacitance : QuantityBase
+    public class Capacitance : QuantityBase, IComparable<Capacitance>
     {
         static Unit? _farad = Units.Farad;
         public Capacitance(Capacitance p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public Capacitance(double val) : base(val, _farad) { }
-        public Capacitance(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _farad, prefix) { }
-        public Capacitance(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public Capacitance(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _farad, prefix) { }
+        public Capacitance(double val, Unit? u, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
         public static implicit operator Capacitance(double val) { return new Capacitance(val); }
         public static implicit operator Capacitance(Quantity mq)
         {
@@ -172,32 +178,34 @@ namespace GreenOptimizer.DimensionAndSort
             return new Capacitance(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(Capacitance? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new Capacitance(this);
         }
     }
 
-    public class MagneticFluxIntensity : QuantityBase
+    public class MagneticFluxIntensity : QuantityBase, IComparable<MagneticFluxIntensity>
     {
-        static Unit? _siemens = Units.Siemens;
+        static Unit? _amperePerMetre = Units.AmperePerMetre;
         public MagneticFluxIntensity(MagneticFluxIntensity p) : base(p.Value, p.Unit, p.PrefixIndex) { }
-        public MagneticFluxIntensity(double val) : base(val, _siemens) { }
-        public MagneticFluxIntensity(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _siemens, prefix) { }
-        public MagneticFluxIntensity(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public MagneticFluxIntensity(double val) : base(val, _amperePerMetre) { }
+        public MagneticFluxIntensity(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _amperePerMetre, prefix) { }
+        public MagneticFluxIntensity(double val, Unit? u, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
         public static implicit operator MagneticFluxIntensity(double val) { return new MagneticFluxIntensity(val); }
         public static implicit operator MagneticFluxIntensity(Quantity mq)
         {
-            if (mq.Unit!.SameDimension(_siemens))
+            if (mq.Unit!.SameDimension(_amperePerMetre))
             {
-                if (mq.Unit == _siemens)
+                if (mq.Unit == _amperePerMetre)
                 {
-                    return new MagneticFluxIntensity(mq.Value, _siemens, mq.PrefixIndex);
+                    return new MagneticFluxIntensity(mq.Value, _amperePerMetre, mq.PrefixIndex);
                 }
                 else
                 {
                     MagneticFluxIntensity p = new MagneticFluxIntensity(mq.Value, mq.Unit, mq.PrefixIndex);
-                    p.SetUnit(_siemens);
+                    p.SetUnit(_amperePerMetre);
                     return p;
                 }
             }
@@ -216,19 +224,21 @@ namespace GreenOptimizer.DimensionAndSort
             return new MagneticFluxIntensity(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(MagneticFluxIntensity? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new MagneticFluxIntensity(this);
         }
     }
 
-    public class MagneticFluxDensity : QuantityBase
+    public class MagneticFluxDensity : QuantityBase, IComparable<MagneticFluxDensity>
     {
         static Unit? _tesla = Units.Tesla;
         public MagneticFluxDensity(MagneticFluxDensity p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public MagneticFluxDensity(double val) : base(val, _tesla) { }
-        public MagneticFluxDensity(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _tesla, prefix) { }
-        public MagneticFluxDensity(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public MagneticFluxDensity(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _tesla, prefix) { }
+        public MagneticFluxDensity(double val, Unit? u, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
         public static implicit operator MagneticFluxDensity(double val) { return new MagneticFluxDensity(val); }
         public static implicit operator MagneticFluxDensity(Quantity mq)
         {
@@ -260,19 +270,21 @@ namespace GreenOptimizer.DimensionAndSort
             return new MagneticFluxDensity(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(MagneticFluxDensity? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new MagneticFluxDensity(this);
         }
     }
 
-    public class MagneticFlux : QuantityBase
+    public class MagneticFlux : QuantityBase, IComparable<MagneticFlux>
     {
         static Unit? _weber = Units.Weber;
         public MagneticFlux(MagneticFlux p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public MagneticFlux(double val) : base(val, _weber) { }
-        public MagneticFlux(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _weber, prefix) { }
-        public MagneticFlux(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public MagneticFlux(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _weber, prefix) { }
+        public MagneticFlux(double val, Unit? u, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
         public static implicit operator MagneticFlux(double val) { return new MagneticFlux(val); }
         public static implicit operator MagneticFlux(Quantity mq)
         {
@@ -304,19 +316,21 @@ namespace GreenOptimizer.DimensionAndSort
             return new MagneticFlux(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(MagneticFlux? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new MagneticFlux(this);
         }
     }
 
-    public class Inductance : QuantityBase
+    public class Inductance : QuantityBase, IComparable<Inductance>
     {
         static Unit? _henry = Units.Henry;
         public Inductance(Inductance p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public Inductance(double val) : base(val, _henry) { }
-        public Inductance(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _henry, prefix) { }
-        public Inductance(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public Inductance(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _henry, prefix) { }
+        public Inductance(double val, Unit? u, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
         public static implicit operator Inductance(double val) { return new Inductance(val); }
         public static implicit operator Inductance(Quantity mq)
         {
@@ -348,17 +362,20 @@ namespace GreenOptimizer.DimensionAndSort
             return new Inductance(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(Inductance? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new Inductance(this);
         }
     }
 
-    public class ElectricCharge : QuantityBase
+    public class ElectricCharge : QuantityBase, IComparable<ElectricCharge>
     {
         static Unit? _coulomb = Units.Coulomb;
-        public ElectricCharge(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _coulomb, prefix) { }
-        public ElectricCharge(double val, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, u, prefix) { }
+        public ElectricCharge(double val) : base(val, _coulomb) { }
+        public ElectricCharge(double val, Unit.SI_Prefix prefix) : base(val, _coulomb, prefix) { }
+        public ElectricCharge(double val, Unit? u, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
         public static implicit operator ElectricCharge(double val) { return new ElectricCharge(val); }
         public static implicit operator ElectricCharge(Quantity mq)
         {
@@ -370,6 +387,7 @@ namespace GreenOptimizer.DimensionAndSort
             => new ElectricCharge(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         public static ElectricCharge operator -(ElectricCharge q1, ElectricCharge q2)
             => new ElectricCharge(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+        public int CompareTo(ElectricCharge? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
         public override QuantityBase Clone() => new ElectricCharge(Value, _unit, _prefixIndex);
     }
 }

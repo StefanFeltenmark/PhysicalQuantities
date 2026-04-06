@@ -1,12 +1,12 @@
-using DimensionAndSort;
+using PhysicalQuantities;
 
-namespace GreenOptimizer.DimensionAndSort
+namespace PhysicalQuantities
 {
-    public class Time : QuantityBase
+    public class Time : QuantityBase, IComparable<Time>
     {
         public static TimeUnit? _second = Units.Second;
-        public Time(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _second, prefix) { }
-        public Time(double val, Unit? unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, unit, prefix) { }
+        public Time(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _second, prefix) { }
+        public Time(double val, Unit? unit, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, unit, prefix) { }
         public Time()
         {
 
@@ -33,16 +33,18 @@ namespace GreenOptimizer.DimensionAndSort
             return new Time(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         }
 
+        public int CompareTo(Time? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new Time(Value, _unit, _prefixIndex);
         }
     }
 
-    public class DimensionlessQuantity : QuantityBase
+    public class DimensionlessQuantity : QuantityBase, IComparable<DimensionlessQuantity>
     {
         protected static Dimensionless? _dimless = Units.Dimensionless;
-        public DimensionlessQuantity(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, new Dimensionless(), prefix) { }
+        public DimensionlessQuantity(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, new Dimensionless(), prefix) { }
         public static implicit operator DimensionlessQuantity(double val) { return new DimensionlessQuantity(val); }
         public static implicit operator DimensionlessQuantity(Quantity mq)
         {
@@ -56,17 +58,19 @@ namespace GreenOptimizer.DimensionAndSort
             }
         }
 
+        public int CompareTo(DimensionlessQuantity? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+
         public override QuantityBase Clone()
         {
             return new DimensionlessQuantity(Value, _prefixIndex);
         }
     }
 
-    public class Frequency : QuantityBase
+    public class Frequency : QuantityBase, IComparable<Frequency>
     {
         static Hertz? _hertz = Units.Hertz;
-        public Frequency(double val, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, _hertz, prefix) { }
-        public Frequency(double val, Unit? unit, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity) : base(val, unit, prefix) { }
+        public Frequency(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _hertz, prefix) { }
+        public Frequency(double val, Unit? unit, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, unit, prefix) { }
         public static implicit operator Frequency(double val) { return new Frequency(val); }
         public static implicit operator Frequency(Quantity mq)
         {
@@ -78,13 +82,14 @@ namespace GreenOptimizer.DimensionAndSort
             => new Frequency(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
         public static Frequency operator -(Frequency q1, Frequency q2)
             => new Frequency(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
+        public int CompareTo(Frequency? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
         public override QuantityBase Clone() => new Frequency(Value, _unit, _prefixIndex);
     }
 
-    public class Percentage : QuantityBase
+    public class Percentage : QuantityBase, IComparable<Percentage>
     {
         protected static Percent? _perc = Units.Percent;
-        public Percentage(double val) : base(val, Units.Percent, Unit.SI_PrefixEnum.unity, "%") { }
+        public Percentage(double val) : base(val, Units.Percent, Unit.SI_Prefix.unity, "%") { }
 
         public static implicit operator Percentage(double val) { return new Percentage(val); }
         public static implicit operator Percentage(Quantity mq)
@@ -98,6 +103,8 @@ namespace GreenOptimizer.DimensionAndSort
                 throw new IncompatibleUnits();
             }
         }
+
+        public int CompareTo(Percentage? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
 
         public override QuantityBase Clone()
         {

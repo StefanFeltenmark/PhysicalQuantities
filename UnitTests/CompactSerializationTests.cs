@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
 using Xunit;
-using DimensionAndSort;
-using GreenOptimizer.DimensionAndSort;
+using PhysicalQuantities;
+using PhysicalQuantities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ProtoBuf;
@@ -210,7 +210,7 @@ namespace UnitTests
         public void Json_PrefixedUnit_RoundTripPreservesValue()
         {
             // 1.5 MW stored as Watt + mega prefix — value must survive round-trip
-            var p = new Power(1.5, Unit.SI_PrefixEnum.mega);
+            var p = new Power(1.5, Unit.SI_Prefix.mega);
             Quantity result = CompactJsonRoundTrip(p);
             Assert.Equal(p.ValueInSIUnits, result.ValueInSIUnits, precision: 6);
         }
@@ -218,11 +218,11 @@ namespace UnitTests
         [Fact]
         public void Json_PrefixedUnit_OutputIncludesPField()
         {
-            var p = new Power(1.5, Unit.SI_PrefixEnum.mega);
+            var p = new Power(1.5, Unit.SI_Prefix.mega);
             string json = Serialize(p);
             JObject jo = JObject.Parse(json);
             Assert.True(jo.ContainsKey("p"), "compact format should include 'p' when prefix != unity");
-            Assert.Equal((int)Unit.SI_PrefixEnum.mega, jo["p"]!.Value<int>());
+            Assert.Equal((int)Unit.SI_Prefix.mega, jo["p"]!.Value<int>());
         }
 
         [Fact]
@@ -259,6 +259,41 @@ namespace UnitTests
             var q = new ElectricCharge(3600, Units.Coulomb); // 1 Ah
             Quantity result = CompactJsonRoundTrip(q);
             Assert.Equal(q.ValueInSIUnits, result.ValueInSIUnits, precision: 6);
+        }
+
+        // -------------------------------------------------------------------------
+        // Monetary serialization
+        // -------------------------------------------------------------------------
+
+        [Fact]
+        public void Json_MonetaryAmount_Euro_RoundTrip()
+        {
+            var amount = new MonetaryAmount(1234.56, Currencies.Euro);
+            string json = Serialize(amount);
+            JObject jo = JObject.Parse(json);
+
+            Assert.True(jo.ContainsKey("c"), "monetary JSON should have 'c' (currency code)");
+            Assert.Equal("EUR", jo["c"]!.Value<string>());
+
+            MonetaryAmount result = (MonetaryAmount)JsonConvert.DeserializeObject<MonetaryAmount>(json, ConverterSettings())!;
+            Assert.Equal(amount.ValueInSIUnits, result.ValueInSIUnits, precision: 6);
+            Assert.IsType<Euro>(result.Unit);
+        }
+
+        [Fact]
+        public void Json_MonetaryAmount_USD_RoundTrip()
+        {
+            var usd = Currencies.USDollar!;
+            usd.ExchangeRateToEur = 0.92;
+            var amount = new MonetaryAmount(100.0, usd);
+
+            string json = Serialize(amount);
+            JObject jo = JObject.Parse(json);
+            Assert.Equal("USD", jo["c"]!.Value<string>());
+
+            MonetaryAmount result = (MonetaryAmount)JsonConvert.DeserializeObject<MonetaryAmount>(json, ConverterSettings())!;
+            Assert.Equal(amount.ValueInSIUnits, result.ValueInSIUnits, precision: 6);
+            Assert.IsType<USDollar>(result.Unit);
         }
 
         // -------------------------------------------------------------------------

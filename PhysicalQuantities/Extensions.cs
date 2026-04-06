@@ -1,6 +1,6 @@
-﻿using DimensionAndSort;
+﻿using PhysicalQuantities;
 
-namespace GreenOptimizer.DimensionAndSort
+namespace PhysicalQuantities
 {
     public static class Extensions
     {
@@ -14,7 +14,7 @@ namespace GreenOptimizer.DimensionAndSort
             return Unit.AsDerivedUnit(unit);
         }
 
-        public static Quantity ToUnit(this Quantity q, Unit? u, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity)
+        public static Quantity ToUnit(this Quantity q, Unit? u, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity)
         {
             Quantity qu = new Quantity(q);
             qu.SetUnit(u);
@@ -23,7 +23,7 @@ namespace GreenOptimizer.DimensionAndSort
         }
 
 
-        public static Quantity ToPrefix(this Quantity q, Unit.SI_PrefixEnum prefix = Unit.SI_PrefixEnum.unity)
+        public static Quantity ToPrefix(this Quantity q, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity)
         {
             Quantity qu = new Quantity(q);
             qu.SetPrefix(prefix);

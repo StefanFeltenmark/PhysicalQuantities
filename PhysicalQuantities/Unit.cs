@@ -1,7 +1,7 @@
 using System.Text;
 using Newtonsoft.Json;
 
-namespace GreenOptimizer.DimensionAndSort
+namespace PhysicalQuantities
 {
 
     public class Scalings
@@ -44,7 +44,7 @@ namespace GreenOptimizer.DimensionAndSort
     public partial class Unit : IEquatable<Unit>, IUnit
     {
         private static SIprefix[] _prefixes = new SIprefix[21] {
-                new SIprefix((int) SI_PrefixEnum.yokto,"y","yokto"),
+                new SIprefix((int) SI_Prefix.yokto,"y","yokto"),
                 new SIprefix(-21,"z", "zepto"),
                 new SIprefix(-18,"a","atto"),
                 new SIprefix(-15,"f","femto"),
@@ -66,14 +66,16 @@ namespace GreenOptimizer.DimensionAndSort
                 new SIprefix(21,"Z","zetta"),
                 new SIprefix(24,"Y","yotta")};
 
-        private static Unit[] _baseUnits = new Unit[7] { new Metre(), new Kilogram(), new Second(), new Ampere(), new Kelvin(), new Candela(), new Mole() };
-        private static Unit[] _derivedUnits = new Unit[15] { new Hertz(), new Newton(), new Pascal(), new Joule(), new Watt(), new Coulomb(), new Volt(), new Farad(), new Ohm(), new Siemens(), new Weber(), new Tesla(), new Henry(), new Lux(), new Katal() };
+        private static Unit[] _baseUnits = [new Metre(), new Kilogram(), new Second(), new Ampere(), new Kelvin(), new Candela(), new Mole()
+        ];
+        private static Unit[] _derivedUnits = [new Hertz(), new Newton(), new Pascal(), new Joule(), new Watt(), new Coulomb(), new Volt(), new Farad(), new Ohm(), new Siemens(), new Weber(), new Tesla(), new Henry(), new Lux(), new Katal()
+        ];
 
         public enum BaseUnitEnum { metre, kilogram, second, ampere, kelvin, candela, mole }
 
         public enum DerivedUnitEnum { hertz, newton, pascal, joule, watt, coulomb, volt, farad, ohm, siemens, weber, tesla, henry, lux, katal }
 
-        public enum SI_PrefixEnum { yokto, zepto, atto, femto, piko, nano, mikro, milli, centi, deci, unity, deka, hekto, kilo, mega, giga, tera, peta, exa, zetta, yotta };
+        public enum SI_Prefix { yokto, zepto, atto, femto, piko, nano, mikro, milli, centi, deci, unity, deka, hekto, kilo, mega, giga, tera, peta, exa, zetta, yotta };
 
         #region memberVariables
 
@@ -81,7 +83,7 @@ namespace GreenOptimizer.DimensionAndSort
         protected double _scale;  // To SI-units
         protected double _offset;  // To SI-units
 
-        protected SI_PrefixEnum _prefixIndex;
+        protected SI_Prefix _prefixIndex;
         #endregion
 
         public double Offset
@@ -132,22 +134,22 @@ namespace GreenOptimizer.DimensionAndSort
             get { return _prefixes[(int)_prefixIndex]; }
         }
 
-        public SI_PrefixEnum PrefixIndex
+        public SI_Prefix PrefixIndex
         {
             get { return _prefixIndex; }
             set { _prefixIndex = value; }
         }
 
-        public Unit(int exp_metre, int exp_kilogram, int exp_second, int exp_ampere, int exp_kelvin, int exp_candela, int exp_mole, double scale = 1.0, double offset = 0.0, SI_PrefixEnum prefix = SI_PrefixEnum.unity)
+        public Unit(int exp_metre, int exp_kilogram, int exp_second, int exp_ampere, int exp_kelvin, int exp_candela, int exp_mole, double scale = 1.0, double offset = 0.0, SI_Prefix prefix = SI_Prefix.unity)
         {
             _dimensions = new DimensionUnit[7];
-            _dimensions[(int)Unit.BaseUnitEnum.metre] = new Unit.DimensionUnit(exp_metre, Scalings.metre, SI_PrefixEnum.unity);
-            _dimensions[(int)Unit.BaseUnitEnum.kilogram] = new Unit.DimensionUnit(exp_kilogram, Scalings.kilogram, SI_PrefixEnum.unity);
-            _dimensions[(int)Unit.BaseUnitEnum.second] = new Unit.DimensionUnit(exp_second, Scalings.second, SI_PrefixEnum.unity);
-            _dimensions[(int)Unit.BaseUnitEnum.ampere] = new Unit.DimensionUnit(exp_ampere, Scalings.ampere, SI_PrefixEnum.unity);
-            _dimensions[(int)Unit.BaseUnitEnum.kelvin] = new Unit.DimensionUnit(exp_kelvin, Scalings.kelvin, SI_PrefixEnum.unity);
-            _dimensions[(int)Unit.BaseUnitEnum.candela] = new Unit.DimensionUnit(exp_candela, Scalings.candela, SI_PrefixEnum.unity);
-            _dimensions[(int)Unit.BaseUnitEnum.mole] = new Unit.DimensionUnit(exp_mole, Scalings.mole, SI_PrefixEnum.unity);
+            _dimensions[(int)Unit.BaseUnitEnum.metre] = new Unit.DimensionUnit(exp_metre, Scalings.metre, SI_Prefix.unity);
+            _dimensions[(int)Unit.BaseUnitEnum.kilogram] = new Unit.DimensionUnit(exp_kilogram, Scalings.kilogram, SI_Prefix.unity);
+            _dimensions[(int)Unit.BaseUnitEnum.second] = new Unit.DimensionUnit(exp_second, Scalings.second, SI_Prefix.unity);
+            _dimensions[(int)Unit.BaseUnitEnum.ampere] = new Unit.DimensionUnit(exp_ampere, Scalings.ampere, SI_Prefix.unity);
+            _dimensions[(int)Unit.BaseUnitEnum.kelvin] = new Unit.DimensionUnit(exp_kelvin, Scalings.kelvin, SI_Prefix.unity);
+            _dimensions[(int)Unit.BaseUnitEnum.candela] = new Unit.DimensionUnit(exp_candela, Scalings.candela, SI_Prefix.unity);
+            _dimensions[(int)Unit.BaseUnitEnum.mole] = new Unit.DimensionUnit(exp_mole, Scalings.mole, SI_Prefix.unity);
 
             if (scale <= 0)
             {
