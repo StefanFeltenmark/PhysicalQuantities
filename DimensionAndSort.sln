@@ -7,10 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DimensionAndSort", "Dimensi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{248D4AA8-648B-4098-B7CB-70844B9153BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DimensionAndSort48", "DimensionAndSort48\DimensionAndSort48.csproj", "{BE812A8A-B49F-482E-B25E-856914A8AF04}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests48", "UnitTests48\UnitTests48.csproj", "{935B2BD1-0059-4194-9D31-C103D73CE26E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DimensionAndSortLight", "DimensioAndSortLight\DimensionAndSortLight.csproj", "{C7E5E103-A479-4A77-B585-A825C1B529C4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestsLight", "UnitTestsLight\UnitTestsLight.csproj", "{7CE46A63-A848-4449-8879-6F7A9686D166}"
@@ -29,14 +25,6 @@ Global
 		{248D4AA8-648B-4098-B7CB-70844B9153BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{248D4AA8-648B-4098-B7CB-70844B9153BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{248D4AA8-648B-4098-B7CB-70844B9153BA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BE812A8A-B49F-482E-B25E-856914A8AF04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE812A8A-B49F-482E-B25E-856914A8AF04}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE812A8A-B49F-482E-B25E-856914A8AF04}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE812A8A-B49F-482E-B25E-856914A8AF04}.Release|Any CPU.Build.0 = Release|Any CPU
-		{935B2BD1-0059-4194-9D31-C103D73CE26E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{935B2BD1-0059-4194-9D31-C103D73CE26E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{935B2BD1-0059-4194-9D31-C103D73CE26E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{935B2BD1-0059-4194-9D31-C103D73CE26E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C7E5E103-A479-4A77-B585-A825C1B529C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C7E5E103-A479-4A77-B585-A825C1B529C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7E5E103-A479-4A77-B585-A825C1B529C4}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc -l /c/Users/stefan.feltenmark/Documents/DimensionAndSort/DimensionAndSort/*.cs /c/Users/stefan.feltenmark/Documents/DimensionAndSort/DimensionAndSort48/*.cs /c/Users/stefan.feltenmark/Documents/DimensionAndSort/DimensioAndSortLight/*.cs)",
+      "Bash(find .:*)",
+      "Bash(dotnet sln:*)",
+      "Bash(dotnet build:*)",
+      "Bash(dotnet test:*)"
+    ]
+  }
+}

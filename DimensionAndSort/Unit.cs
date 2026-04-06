@@ -41,7 +41,7 @@ namespace GreenOptimizer.DimensionAndSort
     }
 
 
-    public class Unit : IEquatable<Unit>
+    public partial class Unit : IEquatable<Unit>, IUnit
     {
         private static SIprefix[] _prefixes = new SIprefix[21] {
                 new SIprefix((int) SI_PrefixEnum.yokto,"y","yokto"),
@@ -69,168 +69,6 @@ namespace GreenOptimizer.DimensionAndSort
         private static Unit[] _baseUnits = new Unit[7] { new Metre(), new Kilogram(), new Second(), new Ampere(), new Kelvin(), new Candela(), new Mole() };
         private static Unit[] _derivedUnits = new Unit[15] { new Hertz(), new Newton(), new Pascal(), new Joule(), new Watt(), new Coulomb(), new Volt(), new Farad(), new Ohm(), new Siemens(), new Weber(), new Tesla(), new Henry(), new Lux(), new Katal() };
 
-        public class SIprefix : IEquatable<SIprefix>
-        {
-            #region memberfields
-            private string _symbol;
-            private string _name;
-            private double _factor;
-            #endregion
-
-            public string Symbol
-            {
-                get { return _symbol; }
-                set { _symbol = value; }
-            }
-
-            public string Name
-            {
-                get { return _name; }
-                set { _name = value; }
-            }
-
-            public double Factor
-            {
-                get { return _factor; }
-                set { _factor = value; }
-            }
-
-            public SIprefix(int exp, string symb, string name)
-            {
-                _symbol = symb;
-                _name = name;
-                _factor = Math.Pow(10, exp);
-            }
-
-            public SIprefix()
-            {
-                _symbol = "nosymbol";
-                _name = "noname";
-                _factor = 1.0;
-            }
-
-
-            public bool Equals(SIprefix? other)
-            {
-                bool equal = false;
-                if (other != null)
-                {
-                    equal = Math.Abs(_factor - other.Factor) < 1.0e-6;
-                    equal = equal && _symbol.Equals(other.Symbol);
-                    equal = equal && _name.Equals(other.Name);
-                }
-
-                return equal;
-            }
-
-            public override string ToString()
-            {
-                return _symbol;
-            }
-
-        }
-
-        public struct Scaling : IEquatable<Scaling>
-        {
-            private double _factor; // say 60 for a minute, 3600 for hourly equivalent
-            private string _symbol; // "HE", "SqFt"
-
-            public double Factor
-            {
-                get { return _factor; }
-                set { _factor = value; }
-            }
-
-            public string Symbol
-            {
-                get { return _symbol; }
-                set { _symbol = value; }
-            }
-
-            public Scaling(string symbol, double factor = 1.0)
-            {
-                _symbol = symbol;
-                _factor = factor;
-            }
-
-            public Scaling()
-            {
-                _symbol = "";
-                _factor = 1.0;
-            }
-
-            public bool Equals(Scaling other)
-            {
-                return (Math.Abs(_factor - other.Factor) < 1e-6) && (_symbol.Equals(other.Symbol));
-            }
-
-            public override string ToString()
-            {
-                return _symbol;
-            }
-
-        }
-
-        public struct DimensionUnit
-        {
-            #region fields
-            private int _exponent;
-            private SI_PrefixEnum _SI_prefix;
-            private Scaling _scaling;
-            #endregion
-
-            public int Exponent
-            {
-                get { return _exponent; }
-                set { _exponent = value; }
-            }
-
-            public Scaling Scaling
-            {
-                get { return _scaling; }
-                set { _scaling = value; }
-            }
-
-            public SI_PrefixEnum SI_prefix
-            {
-                get { return _SI_prefix; }
-                set { _SI_prefix = value; }
-            }
-
-            public DimensionUnit(DimensionUnit u)
-            {
-                _exponent = u.Exponent;
-                _SI_prefix = u.SI_prefix;
-                _scaling = u.Scaling;
-            }
-
-            public void CopyTo(DimensionUnit u)
-            {
-                u.Exponent = _exponent;
-                u._SI_prefix = _SI_prefix;
-                u._scaling = _scaling;
-            }
-
-            public DimensionUnit(int exponent, Scaling scale, SI_PrefixEnum prefix)
-            {
-                _exponent = exponent;
-                _SI_prefix = prefix;
-                _scaling = scale;
-            }
-
-            public DimensionUnit()
-            {
-                _exponent = 0;
-                _SI_prefix = SI_PrefixEnum.unity;
-                _scaling = new Scaling();
-            }
-
-            public override string ToString()
-            {
-                return _prefixes[(int)_SI_prefix].Name;
-            }
-        }
-
         public enum BaseUnitEnum { metre, kilogram, second, ampere, kelvin, candela, mole }
 
         public enum DerivedUnitEnum { hertz, newton, pascal, joule, watt, coulomb, volt, farad, ohm, siemens, weber, tesla, henry, lux, katal }
@@ -238,7 +76,7 @@ namespace GreenOptimizer.DimensionAndSort
         public enum SI_PrefixEnum { yokto, zepto, atto, femto, piko, nano, mikro, milli, centi, deci, unity, deka, hekto, kilo, mega, giga, tera, peta, exa, zetta, yotta };
 
         #region memberVariables
-        
+
         public DimensionUnit[]? _dimensions; // = new Unit.DimensionUnit[7];
         protected double _scale;  // To SI-units
         protected double _offset;  // To SI-units
@@ -266,7 +104,7 @@ namespace GreenOptimizer.DimensionAndSort
 
         public Unit()
         {
-            
+
         }
 
         protected void SetScaling(BaseUnitEnum baseunit, Scaling s)
@@ -519,9 +357,9 @@ namespace GreenOptimizer.DimensionAndSort
             if (ReferenceEquals(other_obj, this)) return true;
 
             if(typeof(Unit) != other_obj.GetType()) return false;
-            
+
             @equals = this.Equals((Unit)other_obj);
-            
+
             return equals;
         }
 

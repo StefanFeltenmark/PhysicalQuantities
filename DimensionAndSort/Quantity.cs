@@ -22,7 +22,7 @@ namespace DimensionAndSort
 
     }
 
-    public class QuantityBase :  IEquatable<QuantityBase> //,IComparable<QuantityBase>
+    public class QuantityBase : IEquatable<QuantityBase>, IQuantity //,IComparable<QuantityBase>
     {
         #region members
         protected Unit? _unit;
