@@ -24,14 +24,16 @@ namespace PhysicalQuantities
 
         public string Name { get; set; }
 
-        // This number changes every day!
+        // This number changes every day! Currency is deliberately mutable here: the daily rate
+        // is updated in place and rewrites the (protected) backing scale directly, since the
+        // public Scale property is now init-only.
         public double ExchangeRateToEur
         {
             get { return _exchangeRateToEUR; }
             set
             {
                 _exchangeRateToEUR = value;
-                Scale = _exchangeRateToEUR;
+                _scale = _exchangeRateToEUR;
             }
         }
 
@@ -44,7 +46,7 @@ namespace PhysicalQuantities
         {
             Currency clone = new Currency(Name);
             clone.ExchangeRateToEur = _exchangeRateToEUR;
-            clone.Scale = _scale;
+            clone._scale = _scale;
             return clone;
         }
 

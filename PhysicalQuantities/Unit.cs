@@ -86,22 +86,25 @@ namespace PhysicalQuantities
         protected SI_Prefix _prefixIndex;
         #endregion
 
+        // Scale/Offset/PrefixIndex are init-only: a Unit's magnitude is fixed at construction.
+        // init still permits assignment from constructors (including derived-class constructors,
+        // e.g. `Bar() : base(...) { Scale = 1e5; }`) and object initializers, so the custom-unit
+        // extension idiom is unchanged — but external code can no longer mutate a shared Unit.
         public double Offset
         {
             get { return _offset; }
-            set { _offset = value; }
+            init { _offset = value; }
         }
 
         public static SIprefix[] Prefixes
         {
             get { return Unit._prefixes; }
-            set { Unit._prefixes = value; }
         }
 
         public double Scale
         {
             get { return _scale; }
-            set { _scale = value; }
+            init { _scale = value; }
         }
 
         public Unit()
@@ -137,7 +140,7 @@ namespace PhysicalQuantities
         public SI_Prefix PrefixIndex
         {
             get { return _prefixIndex; }
-            set { _prefixIndex = value; }
+            init { _prefixIndex = value; }
         }
 
         public Unit(int exp_metre, int exp_kilogram, int exp_second, int exp_ampere, int exp_kelvin, int exp_candela, int exp_mole, double scale = 1.0, double offset = 0.0, SI_Prefix prefix = SI_Prefix.unity)
@@ -180,7 +183,7 @@ namespace PhysicalQuantities
                                 q1._dimensions[(int)BaseUnitEnum.mole].Exponent + q2._dimensions[(int)BaseUnitEnum.mole].Exponent);
 
 
-            u.Scale = q1.Scale * q2.Scale;
+            u._scale = q1.Scale * q2.Scale;
 
             return u;
         }
@@ -194,7 +197,7 @@ namespace PhysicalQuantities
                                 q1._dimensions[(int)BaseUnitEnum.kelvin].Exponent - q2._dimensions[(int)BaseUnitEnum.kelvin].Exponent,
                                 q1._dimensions[(int)BaseUnitEnum.candela].Exponent - q2._dimensions[(int)BaseUnitEnum.candela].Exponent,
                                 q1._dimensions[(int)BaseUnitEnum.mole].Exponent - q2._dimensions[(int)BaseUnitEnum.mole].Exponent);
-            u.Scale = q1.Scale / q2.Scale;
+            u._scale = q1.Scale / q2.Scale;
             return u;
         }
 
@@ -212,7 +215,7 @@ namespace PhysicalQuantities
                              _dimensions[(int)BaseUnitEnum.kelvin].Exponent * n,
                              _dimensions[(int)BaseUnitEnum.candela].Exponent * n,
                              _dimensions[(int)BaseUnitEnum.mole].Exponent * n);
-            u.Scale = Math.Pow(Scale, n);
+            u._scale = Math.Pow(Scale, n);
             return u;
         }
 
@@ -262,8 +265,8 @@ namespace PhysicalQuantities
             // so writing Scale/PrefixIndex onto the match would corrupt the global instance
             // for every later caller.
             Unit du = match.Clone()!;
-            du.Scale = u!.Scale;
-            du.PrefixIndex = u._prefixIndex;
+            du._scale = u!.Scale;
+            du._prefixIndex = u._prefixIndex;
 
             return du;
         }

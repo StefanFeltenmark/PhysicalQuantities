@@ -4,7 +4,7 @@ namespace PhysicalQuantities
     {
         double Scale { get; }
         double Offset { get; }
-        Unit.SI_Prefix PrefixIndex { get; set; }
+        Unit.SI_Prefix PrefixIndex { get; init; }
         bool SameDimension(Unit? other);
         double FromSIUnit(double val);
         Unit? Clone();

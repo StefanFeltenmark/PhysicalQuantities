@@ -121,10 +121,12 @@ namespace PhysicalQuantities
                     unit = new Unit(
                         dims[0].Value<int>(), dims[1].Value<int>(), dims[2].Value<int>(),
                         dims[3].Value<int>(), dims[4].Value<int>(), dims[5].Value<int>(),
-                        dims[6].Value<int>());
-                    unit.Scale = scale;
-                    unit.Offset = offset;
-                    unit.PrefixIndex = (Unit.SI_Prefix)fp;
+                        dims[6].Value<int>())
+                    {
+                        Scale = scale,
+                        Offset = offset,
+                        PrefixIndex = (Unit.SI_Prefix)fp
+                    };
                 }
 
                 // Build a Quantity from SI value directly

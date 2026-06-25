@@ -83,10 +83,12 @@ namespace PhysicalQuantities
             {
                 fallbackUnit = new Unit(
                     Dimensions[0], Dimensions[1], Dimensions[2],
-                    Dimensions[3], Dimensions[4], Dimensions[5], Dimensions[6]);
-                fallbackUnit.Scale = Scale;
-                fallbackUnit.Offset = Offset;
-                fallbackUnit.PrefixIndex = (Unit.SI_Prefix)PrefixIndex;
+                    Dimensions[3], Dimensions[4], Dimensions[5], Dimensions[6])
+                {
+                    Scale = Scale,
+                    Offset = Offset,
+                    PrefixIndex = (Unit.SI_Prefix)PrefixIndex
+                };
             }
 
             var result = new Quantity(0, fallbackUnit);
