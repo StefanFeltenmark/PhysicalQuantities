@@ -9,12 +9,12 @@
     <Title>Physical Quantities</Title>
     <Authors>Stefan Feltenmark</Authors>
     <Description>C# class library for representing physical quantities (force, energy, length) and their units (m, s, W, J) with type-safe dimensional analysis.</Description>
-    <PackageReleaseNotes>2.0.0 (breaking): Corrected misspelled SI_Prefix enum members (yokto/piko/mikro/deka/hekto to yocto/pico/micro/deca/hecto). Replaced the misleading Unit + int power operator with Unit.Pow(int). Removed the no-op DimensionUnit.CopyTo. Also fixes equality/hashcode contract, scalar/quantity unit inversion, dimension checks on comparisons, and shared-singleton mutation in AsDerivedUnit.</PackageReleaseNotes>
+    <PackageReleaseNotes>3.0.0 (breaking): Unit.Scale/Offset/PrefixIndex are now init-only and the static Prefixes table is get-only; a Unit's magnitude is fixed at construction (custom units configured via constructor body or object initializer are unaffected). Internally, the ~40 typed quantities now share a Quantity&lt;TSelf&gt; CRTP base. 2.0.0 (breaking): Corrected misspelled SI_Prefix enum members (yokto/piko/mikro/deka/hekto to yocto/pico/micro/deca/hecto); replaced the misleading Unit + int power operator with Unit.Pow(int); removed the no-op DimensionUnit.CopyTo; fixed equality/hashcode contract, scalar/quantity unit inversion, comparison dimension checks, and shared-singleton mutation in AsDerivedUnit.</PackageReleaseNotes>
     <PackageId>PhysicalQuantities</PackageId>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
 
-    <Version>2.0.0</Version>
+    <Version>3.0.0</Version>
     <PackageProjectUrl>https://github.com/StefanFeltenmark/PhysicalQuantities</PackageProjectUrl>
     <RepositoryUrl>https://github.com/StefanFeltenmark/PhysicalQuantities</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
