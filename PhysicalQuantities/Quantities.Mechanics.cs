@@ -2,90 +2,31 @@ using PhysicalQuantities;
 
 namespace PhysicalQuantities
 {
-    public class Length : QuantityBase, IComparable<Length>
+    public class Length : Quantity<Length>
     {
         public Length(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, Units.Metre, prefix) { }
         public Length(double val, Unit? unit, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, unit, prefix) { }
-        public Length()
-        {
+        public Length() { }
 
-        }
-        public static implicit operator Length(double val) { return new Length(val); }
-        public static implicit operator Length(Quantity mq)
-        {
-            if (mq.Unit!.SameDimension(Units.Metre))
-            {
-                return new Length(mq.Value, mq.Unit, mq.PrefixIndex);
-            }
-            else
-            {
-                throw new IncompatibleUnits();
-            }
-        }
-        public static Length operator +(Length q1, Length q2)
-        {
-            return new Length(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
-        }
+        protected override Unit CanonicalUnit => Units.Metre!;
 
-        public static Length operator -(Length q1, Length q2)
-        {
-            return new Length(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
-        }
-
-        public static Length operator -(Length q1)
-        {
-            return new Length(-q1.Value, q1.Unit, q1.PrefixIndex);
-        }
-
-        public int CompareTo(Length? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
-
-        public override QuantityBase Clone()
-        {
-            return new Length(Value, _unit, _prefixIndex);
-        }
+        public static implicit operator Length(double val) => FromValue(val);
+        public static implicit operator Length(Quantity mq) => FromQuantity(mq);
     }
 
-    public class Mass : QuantityBase, IComparable<Mass>
+    public class Mass : Quantity<Mass>
     {
         protected static Kilogram? _kilo = Units.Kilogram;
 
         public Mass(double val) : base(val, _kilo) { }
         public Mass(double val, Unit.SI_Prefix prefix) : base(val, _kilo, prefix) { }
         public Mass(double val, Unit? unit, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, unit, prefix) { }
+        public Mass() { }
 
-        public Mass()
-        {
+        protected override Unit CanonicalUnit => _kilo!;
 
-        }
-
-        public static implicit operator Mass(double val) { return new Mass(val); }
-        public static implicit operator Mass(Quantity mq)
-        {
-            if (mq.Unit!.SameDimension(_kilo))
-            {
-                return new Mass(mq.Value, mq.Unit, mq.PrefixIndex);
-            }
-            else
-            {
-                throw new IncompatibleUnits();
-            }
-        }
-        public static Mass operator +(Mass q1, Mass q2)
-        {
-            return new Mass(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
-        }
-
-        public static Mass operator -(Mass q1, Mass q2)
-        {
-            return new Mass(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
-        }
-
-        public int CompareTo(Mass? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
-
-        public override QuantityBase Clone()
-        {
-            return new Mass(Value, _unit, _prefixIndex);
-        }
+        public static implicit operator Mass(double val) => FromValue(val);
+        public static implicit operator Mass(Quantity mq) => FromQuantity(mq);
     }
 
     public class Area : QuantityBase, IComparable<Area>

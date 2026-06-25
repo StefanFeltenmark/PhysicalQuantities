@@ -246,54 +246,19 @@ namespace PhysicalQuantities
         }
     }
 
-    public class Power : QuantityBase, IComparable<Power>
+    public class Power : Quantity<Power>
     {
         static Watt? _watt = new Watt();
         public Power(Power p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public Power(double val = 0.0) : base(val, _watt) { }
         public Power(double val = 0.0, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _watt, prefix) { }
         public Power(double val = 0.0, Unit? u = null, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
+        public Power() { }
 
-        public Power()
-        {
+        protected override Unit CanonicalUnit => _watt!;
+        protected override ConversionMode Conversion => ConversionMode.NormalizeToCanonical;
 
-        }
-        public static implicit operator Power(double val) { return new Power(val); }
-        public static implicit operator Power(Quantity mq)
-        {
-            if (mq.Unit!.SameDimension(_watt))
-            {
-                if (mq.Unit == _watt)
-                {
-                    return new Power(mq.Value, _watt, mq.PrefixIndex);
-                }
-                else
-                {
-                    Power p = new Power(mq.Value, mq.Unit, mq.PrefixIndex);
-                    p.SetUnit(_watt);
-                    return p;
-                }
-            }
-            else
-            {
-                throw new IncompatibleUnits();
-            }
-        }
-        public static Power operator +(Power q1, Power q2)
-        {
-            return new Power(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
-        }
-
-        public static Power operator -(Power q1, Power q2)
-        {
-            return new Power(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
-        }
-
-        public int CompareTo(Power? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
-
-        public override QuantityBase Clone()
-        {
-            return new Power(this);
-        }
+        public static implicit operator Power(double val) => FromValue(val);
+        public static implicit operator Power(Quantity mq) => FromQuantity(mq);
     }
 }
