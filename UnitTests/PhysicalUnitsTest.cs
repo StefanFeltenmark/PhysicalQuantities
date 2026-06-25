@@ -1342,6 +1342,30 @@ namespace UnitTests
             Assert.Equal(1e9, km.Pow(3).Scale, 3);
         }
 
+        // CRTP base: inherited operators keep the concrete return type.
+        [Fact]
+        public void TestCrtpArithmeticReturnsTypedResult()
+        {
+            var sum = new Mass(2) + new Mass(3);
+            Assert.IsType<Mass>(sum);
+            Assert.True(Math.Abs(sum.ValueInSIUnits - 5.0) < 1e-9);
+
+            var diff = new Power(1000) - new Power(250);
+            Assert.IsType<Power>(diff);
+            Assert.True(Math.Abs(diff.ValueInSIUnits - 750.0) < 1e-9);
+        }
+
+        // CRTP base: unary negation is now available on every linear quantity.
+        [Fact]
+        public void TestUnaryNegationFromBase()
+        {
+            Energy e = -new Energy(100);
+            Assert.True(Math.Abs(e.ValueInSIUnits + 100.0) < 1e-9);
+
+            Current i = -new Current(5);
+            Assert.True(Math.Abs(i.ValueInSIUnits + 5.0) < 1e-9);
+        }
+
         #region Additional test attributes
 
         //

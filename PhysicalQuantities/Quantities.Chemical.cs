@@ -2,141 +2,51 @@ using PhysicalQuantities;
 
 namespace PhysicalQuantities
 {
-    public class LuminousIntensity : QuantityBase, IComparable<LuminousIntensity>
+    public class LuminousIntensity : Quantity<LuminousIntensity>
     {
         static Unit? _candela = Units.Candela;
         public LuminousIntensity(LuminousIntensity p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public LuminousIntensity(double val) : base(val, _candela) { }
         public LuminousIntensity(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _candela, prefix) { }
         public LuminousIntensity(double val, Unit? u, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
-        public static implicit operator LuminousIntensity(double val) { return new LuminousIntensity(val); }
-        public static implicit operator LuminousIntensity(Quantity mq)
-        {
-            if (mq.Unit!.SameDimension(_candela))
-            {
-                if (mq.Unit! ==_candela)
-                {
-                    return new LuminousIntensity(mq.Value, _candela, mq.PrefixIndex);
-                }
-                else
-                {
-                    LuminousIntensity p = new LuminousIntensity(mq.Value, mq.Unit, mq.PrefixIndex);
-                    p.SetUnit(_candela);
-                    return p;
-                }
-            }
-            else
-            {
-                throw new IncompatibleUnits();
-            }
-        }
-        public static LuminousIntensity operator +(LuminousIntensity q1, LuminousIntensity q2)
-        {
-            return new LuminousIntensity(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
-        }
+        public LuminousIntensity() { }
 
-        public static LuminousIntensity operator -(LuminousIntensity q1, LuminousIntensity q2)
-        {
-            return new LuminousIntensity(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
-        }
+        protected override Unit CanonicalUnit => _candela!;
+        protected override ConversionMode Conversion => ConversionMode.NormalizeToCanonical;
 
-        public int CompareTo(LuminousIntensity? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
-
-        public override QuantityBase Clone()
-        {
-            return new LuminousIntensity(this);
-        }
+        public static implicit operator LuminousIntensity(double val) => FromValue(val);
+        public static implicit operator LuminousIntensity(Quantity mq) => FromQuantity(mq);
     }
 
-    public class CatalyticActivity : QuantityBase, IComparable<CatalyticActivity>
+    public class CatalyticActivity : Quantity<CatalyticActivity>
     {
         static Unit? _katal = Units.Katal;
         public CatalyticActivity(CatalyticActivity p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public CatalyticActivity(double val) : base(val, _katal) { }
         public CatalyticActivity(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _katal, prefix) { }
         public CatalyticActivity(double val, Unit? u, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
-        public static implicit operator CatalyticActivity(double val) { return new CatalyticActivity(val); }
-        public static implicit operator CatalyticActivity(Quantity mq)
-        {
-            if (mq.Unit!.SameDimension(_katal))
-            {
-                if (mq.Unit! ==_katal)
-                {
-                    return new CatalyticActivity(mq.Value, _katal, mq.PrefixIndex);
-                }
-                else
-                {
-                    CatalyticActivity p = new CatalyticActivity(mq.Value, mq.Unit, mq.PrefixIndex);
-                    p.SetUnit(_katal);
-                    return p;
-                }
-            }
-            else
-            {
-                throw new IncompatibleUnits();
-            }
-        }
-        public static CatalyticActivity operator +(CatalyticActivity q1, CatalyticActivity q2)
-        {
-            return new CatalyticActivity(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
-        }
+        public CatalyticActivity() { }
 
-        public static CatalyticActivity operator -(CatalyticActivity q1, CatalyticActivity q2)
-        {
-            return new CatalyticActivity(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
-        }
+        protected override Unit CanonicalUnit => _katal!;
+        protected override ConversionMode Conversion => ConversionMode.NormalizeToCanonical;
 
-        public int CompareTo(CatalyticActivity? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
-
-        public override QuantityBase Clone()
-        {
-            return new CatalyticActivity(this);
-        }
+        public static implicit operator CatalyticActivity(double val) => FromValue(val);
+        public static implicit operator CatalyticActivity(Quantity mq) => FromQuantity(mq);
     }
 
-    public class AmountOfSubstance : QuantityBase, IComparable<AmountOfSubstance>
+    public class AmountOfSubstance : Quantity<AmountOfSubstance>
     {
         static Unit? _mole = Units.Mole;
         public AmountOfSubstance(AmountOfSubstance p) : base(p.Value, p.Unit, p.PrefixIndex) { }
         public AmountOfSubstance(double val) : base(val, _mole) { }
         public AmountOfSubstance(double val, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, _mole, prefix) { }
         public AmountOfSubstance(double val, Unit? u, Unit.SI_Prefix prefix = Unit.SI_Prefix.unity) : base(val, u, prefix) { }
-        public static implicit operator AmountOfSubstance(double val) { return new AmountOfSubstance(val); }
-        public static implicit operator AmountOfSubstance(Quantity mq)
-        {
-            if (mq.Unit!.SameDimension(_mole))
-            {
-                if (mq.Unit! ==_mole)
-                {
-                    return new AmountOfSubstance(mq.Value, _mole, mq.PrefixIndex);
-                }
-                else
-                {
-                    AmountOfSubstance p = new AmountOfSubstance(mq.Value, mq.Unit, mq.PrefixIndex);
-                    p.SetUnit(_mole);
-                    return p;
-                }
-            }
-            else
-            {
-                throw new IncompatibleUnits();
-            }
-        }
-        public static AmountOfSubstance operator +(AmountOfSubstance q1, AmountOfSubstance q2)
-        {
-            return new AmountOfSubstance(q1.Unit!.FromSIUnit(q1.ValueInSIUnits + q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
-        }
+        public AmountOfSubstance() { }
 
-        public static AmountOfSubstance operator -(AmountOfSubstance q1, AmountOfSubstance q2)
-        {
-            return new AmountOfSubstance(q1.Unit!.FromSIUnit(q1.ValueInSIUnits - q2.ValueInSIUnits) / q1.prefix.Factor, q1.Unit, q1.PrefixIndex);
-        }
+        protected override Unit CanonicalUnit => _mole!;
+        protected override ConversionMode Conversion => ConversionMode.NormalizeToCanonical;
 
-        public int CompareTo(AmountOfSubstance? other) => ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
-
-        public override QuantityBase Clone()
-        {
-            return new AmountOfSubstance(this);
-        }
+        public static implicit operator AmountOfSubstance(double val) => FromValue(val);
+        public static implicit operator AmountOfSubstance(Quantity mq) => FromQuantity(mq);
     }
 }
