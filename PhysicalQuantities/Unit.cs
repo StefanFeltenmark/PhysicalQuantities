@@ -153,7 +153,7 @@ namespace PhysicalQuantities
 
             if (scale <= 0)
             {
-                throw new Exception("Scale must be positive");
+                throw new ArgumentOutOfRangeException(nameof(scale), scale, "Scale must be positive");
             }
 
             _scale = scale;
@@ -242,17 +242,7 @@ namespace PhysicalQuantities
 
         public static Unit? AsBaseUnit(Unit? u)
         {
-            Unit? bu = null;
-
-            try
-            {
-                bu = _baseUnits.First(cu => cu.Equals(u));
-            }
-            catch (InvalidOperationException)
-            {
-
-            }
-            return bu;
+            return _baseUnits.FirstOrDefault(cu => cu.Equals(u));
         }
 
         public static Unit? AsDerivedUnit(Unit? u)
