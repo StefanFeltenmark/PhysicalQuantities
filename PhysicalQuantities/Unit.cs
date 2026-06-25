@@ -44,19 +44,19 @@ namespace PhysicalQuantities
     public partial class Unit : IEquatable<Unit>, IUnit
     {
         private static SIprefix[] _prefixes = new SIprefix[21] {
-                new SIprefix((int) SI_Prefix.yokto,"y","yokto"),
+                new SIprefix((int) SI_Prefix.yocto,"y","yocto"),
                 new SIprefix(-21,"z", "zepto"),
                 new SIprefix(-18,"a","atto"),
                 new SIprefix(-15,"f","femto"),
-                new SIprefix(-12,"p","piko"),
+                new SIprefix(-12,"p","pico"),
                 new SIprefix(-9,"n","nano"),
-                new SIprefix(-6,"mu","mikro"),
+                new SIprefix(-6,"mu","micro"),
                 new SIprefix(-3,"m","milli"),
                 new SIprefix(-2,"c","centi"),
                 new SIprefix(-1,"d","deci"),
                 new SIprefix(0,"",""),
-                new SIprefix(1,"da","deka"),
-                new SIprefix(2,"h","hekto"),
+                new SIprefix(1,"da","deca"),
+                new SIprefix(2,"h","hecto"),
                 new SIprefix(3,"k","kilo"),
                 new SIprefix(6,"M","mega"),
                 new SIprefix(9,"G","giga"),
@@ -75,7 +75,7 @@ namespace PhysicalQuantities
 
         public enum DerivedUnitEnum { hertz, newton, pascal, joule, watt, coulomb, volt, farad, ohm, siemens, weber, tesla, henry, lux, katal }
 
-        public enum SI_Prefix { yokto, zepto, atto, femto, piko, nano, mikro, milli, centi, deci, unity, deka, hekto, kilo, mega, giga, tera, peta, exa, zetta, yotta };
+        public enum SI_Prefix { yocto, zepto, atto, femto, pico, nano, micro, milli, centi, deci, unity, deca, hecto, kilo, mega, giga, tera, peta, exa, zetta, yotta };
 
         #region memberVariables
 
@@ -198,15 +198,22 @@ namespace PhysicalQuantities
             return u;
         }
 
-        public static Unit operator +(Unit? q1, int n)
+        /// <summary>
+        /// Raises this unit to the integer power <paramref name="n"/>, multiplying every
+        /// dimension exponent by n (e.g. metre.Pow(3) is cubic metre). The resulting scale
+        /// is the unit's scale raised to the same power.
+        /// </summary>
+        public Unit Pow(int n)
         {
-            return new Unit(q1!._dimensions![(int)BaseUnitEnum.metre].Exponent * n,
-                                q1._dimensions[(int)BaseUnitEnum.kilogram].Exponent * n,
-                                q1._dimensions[(int)BaseUnitEnum.second].Exponent * n,
-                                q1._dimensions[(int)BaseUnitEnum.ampere].Exponent * n,
-                                q1._dimensions[(int)BaseUnitEnum.kelvin].Exponent * n,
-                                q1._dimensions[(int)BaseUnitEnum.candela].Exponent * n,
-                                q1._dimensions[(int)BaseUnitEnum.mole].Exponent * n);
+            var u = new Unit(_dimensions![(int)BaseUnitEnum.metre].Exponent * n,
+                             _dimensions[(int)BaseUnitEnum.kilogram].Exponent * n,
+                             _dimensions[(int)BaseUnitEnum.second].Exponent * n,
+                             _dimensions[(int)BaseUnitEnum.ampere].Exponent * n,
+                             _dimensions[(int)BaseUnitEnum.kelvin].Exponent * n,
+                             _dimensions[(int)BaseUnitEnum.candela].Exponent * n,
+                             _dimensions[(int)BaseUnitEnum.mole].Exponent * n);
+            u.Scale = Math.Pow(Scale, n);
+            return u;
         }
 
         public static bool operator ==(Unit? u1, Unit? u2)

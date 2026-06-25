@@ -230,7 +230,7 @@ namespace UnitTests
         public void TestVolume()
         {
             var v1 = new Volume(2, Units.HourEquivalent);
-            var v2 = new Volume(1000, Unit.SI_Prefix.hekto);
+            var v2 = new Volume(1000, Unit.SI_Prefix.hecto);
             var v3 = v1 + v2;
         }
 
@@ -357,7 +357,7 @@ namespace UnitTests
 
             Power P = U * I;
 
-            P.SetPrefix(Unit.SI_Prefix.mikro);
+            P.SetPrefix(Unit.SI_Prefix.micro);
         }
 
         [Fact]
@@ -365,7 +365,7 @@ namespace UnitTests
         {
             var U = new Voltage(20, Unit.SI_Prefix.milli);
             var I = new Current(5, Unit.SI_Prefix.milli);
-            var R = new Resistance(1, Unit.SI_Prefix.hekto);
+            var R = new Resistance(1, Unit.SI_Prefix.hecto);
 
             Power P2 = (R * QuantityBase.Pow(I, 2)).ToPrefix(Unit.SI_Prefix.mega);
 
@@ -854,7 +854,7 @@ namespace UnitTests
         {
             Length lc = new Length(10, Unit.SI_Prefix.centi);
             Length lm = new Length(10, Unit.SI_Prefix.milli);
-            Length lk = new Length(10, Unit.SI_Prefix.hekto);
+            Length lk = new Length(10, Unit.SI_Prefix.hecto);
 
             Length L = lk + 2 * lm + 5 * lc;
 
@@ -873,7 +873,7 @@ namespace UnitTests
         public void TestCapacitanceEnergyStored()
         {
             // E = ½ C V²
-            var C = new Capacitance(10, Unit.SI_Prefix.mikro); // 10 µF
+            var C = new Capacitance(10, Unit.SI_Prefix.micro); // 10 µF
             var V = new Voltage(100);                              // 100 V
             Energy E = 0.5 * C * V * V;
             Assert.True(Math.Abs(E.ValueInSIUnits - 0.05) < 1e-9);
@@ -882,8 +882,8 @@ namespace UnitTests
         [Fact]
         public void TestCapacitanceAddition()
         {
-            var c1 = new Capacitance(100, Unit.SI_Prefix.mikro);
-            var c2 = new Capacitance(200, Unit.SI_Prefix.mikro);
+            var c1 = new Capacitance(100, Unit.SI_Prefix.micro);
+            var c2 = new Capacitance(200, Unit.SI_Prefix.micro);
             Capacitance c3 = c1 + c2;
             Assert.True(Math.Abs(c3.ValueInSIUnits - 300e-6) < 1e-12);
         }
@@ -1328,6 +1328,18 @@ namespace UnitTests
             Assert.True(shorter < longer);
             Assert.True(longer > shorter);
             Assert.True(shorter <= new Length(5));
+        }
+
+        // v2: Unit.Pow replaces the misleading `Unit + int` operator.
+        [Fact]
+        public void TestUnitPow()
+        {
+            Unit cubic = Units.Metre!.Pow(3);
+            Assert.True(cubic.SameDimension(Units.QubicMetre));
+
+            // Power of a scaled unit carries scale^n: 1 km cubed = 1e9 m^3.
+            Unit km = new Metre() { PrefixIndex = Unit.SI_Prefix.kilo, Scale = 1e3 };
+            Assert.Equal(1e9, km.Pow(3).Scale, 3);
         }
 
         #region Additional test attributes

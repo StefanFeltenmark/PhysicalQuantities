@@ -258,7 +258,9 @@ namespace PhysicalQuantities
 
         public static Quantity Pow(QuantityBase q1, int n)
         {
-            return new Quantity(Math.Pow(q1.ValueInSIUnits, (double)n), q1.Unit + n);
+            Unit u = q1.Unit!.Pow(n);
+            double siValue = Math.Pow(q1.ValueInSIUnits, (double)n);
+            return new Quantity(u.FromSIUnit(siValue), u);
         }
 
         /// <summary>

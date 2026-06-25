@@ -35,13 +35,6 @@ namespace PhysicalQuantities
                 _scaling = u.Scaling;
             }
 
-            public void CopyTo(DimensionUnit u)
-            {
-                u.Exponent = _exponent;
-                u._SI_prefix = _SI_prefix;
-                u._scaling = _scaling;
-            }
-
             public DimensionUnit(int exponent, Scaling scale, SI_Prefix prefix)
             {
                 _exponent = exponent;
