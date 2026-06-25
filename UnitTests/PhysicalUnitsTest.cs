@@ -1248,6 +1248,88 @@ namespace UnitTests
             });
         }
 
+        // ── Regression: correctness bug fixes ──────────────────────────────────
+
+        // Fix #1: Unit.GetHashCode must be consistent with value-based Equals.
+        [Fact]
+        public void TestUnitHashCodeConsistentWithEquals()
+        {
+            var w1 = new Watt();
+            var w2 = new Watt();
+            Assert.True(w1.Equals(w2));
+            Assert.Equal(w1.GetHashCode(), w2.GetHashCode());
+
+            // Equal units must be usable as dictionary keys.
+            var dict = new Dictionary<Unit, string> { [w1] = "power" };
+            Assert.True(dict.ContainsKey(w2));
+        }
+
+        // Fix #1 (companion): QuantityBase.GetHashCode consistent with Equals.
+        [Fact]
+        public void TestQuantityHashCodeConsistentWithEquals()
+        {
+            var p1 = new Power(1000);
+            var p2 = new Power(1000);
+            Assert.True(p1.Equals(p2));
+            Assert.Equal(p1.GetHashCode(), p2.GetHashCode());
+        }
+
+        // Fix #3: AsDerivedUnit must not mutate the shared singleton instances.
+        [Fact]
+        public void TestToDerivedUnitDoesNotMutateSharedSingleton()
+        {
+            double scaleBefore = Units.Watt.Scale;
+            var prefixBefore = Units.Watt.PrefixIndex;
+
+            // A derived unit carrying a non-unity scale/prefix; previously this
+            // wrote back onto the shared Watt instance.
+            var u = (new Joule(Unit.SI_Prefix.mega) / new Hour()).ToDerivedUnit();
+
+            Assert.Equal(scaleBefore, Units.Watt.Scale);
+            Assert.Equal(prefixBefore, Units.Watt.PrefixIndex);
+        }
+
+        // Fix #4: scalar / quantity must invert the unit's dimension.
+        [Fact]
+        public void TestScalarDividedByQuantityInvertsUnit()
+        {
+            // 1 / (50 Hz) = 0.02 s  → dimension must be Time (second), not Hz.
+            var f = new Frequency(50);
+            var T = 1.0 / f;
+            Assert.True(T.Unit!.SameDimension(Units.Second));
+            Assert.False(T.Unit!.SameDimension(Units.Hertz));
+            Assert.True(Math.Abs(T.ValueInSIUnits - 0.02) < 1e-9);
+
+            // And it round-trips back into a typed Time.
+            Time period = T;
+            Assert.True(Math.Abs(period.ValueInSIUnits - 0.02) < 1e-9);
+        }
+
+        // Fix #5: comparing quantities of different dimension must throw.
+        [Fact]
+        public void TestComparisonAcrossDimensionsThrows()
+        {
+            var length = new Length(5);
+            var mass = new Mass(3);
+
+            Assert.Throws<IncompatibleUnits>(() => { var _ = length < mass; });
+            Assert.Throws<IncompatibleUnits>(() => { var _ = length > mass; });
+            Assert.Throws<IncompatibleUnits>(() => { var _ = length <= mass; });
+            Assert.Throws<IncompatibleUnits>(() => { var _ = length >= mass; });
+            Assert.Throws<IncompatibleUnits>(() => ((QuantityBase)length).CompareTo(mass));
+        }
+
+        // Fix #5: same-dimension comparisons still work.
+        [Fact]
+        public void TestComparisonSameDimensionStillWorks()
+        {
+            var shorter = new Length(5);
+            var longer = new Length(10);
+            Assert.True(shorter < longer);
+            Assert.True(longer > shorter);
+            Assert.True(shorter <= new Length(5));
+        }
+
         #region Additional test attributes
 
         //

@@ -257,17 +257,14 @@ namespace PhysicalQuantities
 
         public static Unit? AsDerivedUnit(Unit? u)
         {
-            Unit? du = null;
-            try
-            {
-                du = _derivedUnits.First(cu => cu.SameDimension(u));
-            }
-            catch (InvalidOperationException)
-            {
+            Unit? match = _derivedUnits.FirstOrDefault(cu => cu.SameDimension(u));
 
-            }
+            if (match == null) return null;
 
-            if (du == null) return du;
+            // Clone before mutating: the entries in _derivedUnits are shared singletons,
+            // so writing Scale/PrefixIndex onto the match would corrupt the global instance
+            // for every later caller.
+            Unit du = match.Clone()!;
             du.Scale = u!.Scale;
             du.PrefixIndex = u._prefixIndex;
 
@@ -368,7 +365,17 @@ namespace PhysicalQuantities
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            // Must be consistent with Equals (value-based). Equals requires SameDimension,
+            // so hashing the dimension exponents alone guarantees equal units hash equally.
+            // Scale/scaling are intentionally excluded: Equals compares them with a tolerance,
+            // which cannot be reflected in a hash without breaking the equals/hashcode contract.
+            if (_dimensions == null) return 0;
+            var hash = new HashCode();
+            for (int i = 0; i < 7; ++i)
+            {
+                hash.Add(_dimensions[i].Exponent);
+            }
+            return hash.ToHashCode();
         }
 
         #endregion

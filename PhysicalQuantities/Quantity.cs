@@ -49,14 +49,10 @@ namespace PhysicalQuantities
 
         public override int GetHashCode()
         {
-            unchecked
-            {
-                var hashCode = (_unit != null ? _unit.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ _valueInSIUnits.GetHashCode();
-                hashCode = (hashCode * 397) ^ (int)_prefixIndex;
-
-                return hashCode;
-            }
+            // Equals compares the value with a tolerance (and ignores the display prefix),
+            // so neither the value nor the prefix can participate in the hash without
+            // breaking the equals/hashcode contract. Hash on the unit only.
+            return _unit != null ? _unit.GetHashCode() : 0;
         }
 
         public static bool operator ==(QuantityBase? q1, QuantityBase? q2)
@@ -186,7 +182,10 @@ namespace PhysicalQuantities
 
         public static Quantity operator /(double f, QuantityBase q1)
         {
-            return new Quantity(f / q1.Value, q1.Unit, q1.PrefixIndex);
+            // Dividing a scalar by a quantity inverts the unit: f / (x·U) has dimension U^-1.
+            Unit invUnit = new Dimensionless() / q1.Unit;
+            double val = (f / q1.ValueInSIUnits) / invUnit.Scale;
+            return new Quantity(val, invUnit);
         }
 
         public static Quantity operator +(QuantityBase q1, QuantityBase q2)
@@ -233,21 +232,25 @@ namespace PhysicalQuantities
 
         public static bool operator <=(QuantityBase q1, QuantityBase q2)
         {
+            if (!q1._unit!.SameDimension(q2._unit)) throw new IncompatibleUnits();
             return q1.ValueInSIUnits <= q2.ValueInSIUnits;
         }
 
         public static bool operator >=(QuantityBase q1, QuantityBase q2)
         {
+            if (!q1._unit!.SameDimension(q2._unit)) throw new IncompatibleUnits();
             return q1.ValueInSIUnits >= q2.ValueInSIUnits;
         }
 
         public static bool operator <(QuantityBase q1, QuantityBase q2)
         {
+            if (!q1._unit!.SameDimension(q2._unit)) throw new IncompatibleUnits();
             return q1.ValueInSIUnits < q2.ValueInSIUnits;
         }
 
         public static bool operator >(QuantityBase q1, QuantityBase q2)
         {
+            if (!q1._unit!.SameDimension(q2._unit)) throw new IncompatibleUnits();
             return q1.ValueInSIUnits > q2.ValueInSIUnits;
         }
 
@@ -328,7 +331,9 @@ namespace PhysicalQuantities
 
         public int CompareTo(QuantityBase? other)
         {
-            return ValueInSIUnits.CompareTo(other?.ValueInSIUnits);
+            if (other == null) return 1;
+            if (!_unit!.SameDimension(other._unit)) throw new IncompatibleUnits();
+            return ValueInSIUnits.CompareTo(other.ValueInSIUnits);
         }
 
         #endregion
